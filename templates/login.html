@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>UTKAL COAL MINE - Safety Portal</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="home-body">
+
+<!-- ================= TOP BAR ================= -->
+
+<div class="topbar">
+
+    <div class="top-left">
+
+        SAFETY FIRST • ZERO ACCIDENT MISSION
+
+    </div>
+
+    <div class="top-right">
+
+        <button onclick="setLanguage('en')"
+        class="lang-btn">
+
+            English
+
+        </button>
+
+        <button onclick="setLanguage('hi')"
+        class="lang-btn">
+
+            हिंदी
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="main-navbar">
+
+    <div class="logo-area">
+
+        <h1>
+
+            UTKAL COAL MINE
+
+        </h1>
+
+        <p>
+
+            Safety Training & Awareness Portal
+
+        </p>
+
+    </div>
+
+    <div>
+
+        <button class="login-open-btn"
+        onclick="openLogin()">
+
+            Employee Login
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ================= HERO SECTION ================= -->
+
+<div class="hero-section">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <h1 id="mainHeading">
+
+            SAFETY IS OUR PRIORITY
+
+        </h1>
+
+        <p id="mainSubHeading">
+
+            Every Employee Returns Home Safely
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <button class="hero-btn">
+
+                Mine Safety
+
+            </button>
+
+            <button class="hero-btn">
+
+                PPE Awareness
+
+            </button>
+
+            <button class="hero-btn">
+
+                Dumper Safety
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= SAFETY MESSAGE ================= -->
+
+<div class="message-section">
+
+    <div class="message-card">
+
+        <h2 id="msg1">
+
+            Always Wear PPE Inside Mining Area
+
+        </h2>
+
+    </div>
+
+    <div class="message-card">
+
+        <h2 id="msg2">
+
+            Follow Safety Rules To Prevent Accidents
+
+        </h2>
+
+    </div>
+
+    <div class="message-card">
+
+        <h2 id="msg3">
+
+            Report Unsafe Conditions Immediately
+
+        </h2>
+
+    </div>
+
+    <div class="message-card">
+
+        <h2 id="msg4">
+
+            Safety Saves Lives
+
+        </h2>
+
+    </div>
+
+</div>
+
+<!-- ================= ABOUT ================= -->
+
+<div class="about-section">
+
+    <h1 id="aboutTitle">
+
+        About Safety Portal
+
+    </h1>
+
+    <p id="aboutText">
+
+        This portal is developed for safety awareness,
+        training videos, employee learning and accident
+        prevention inside mining operational areas.
+
+    </p>
+
+</div>
+
+<!-- ================= LOGIN MODAL ================= -->
+
+<div class="login-modal"
+id="loginModal">
+
+    <div class="login-box">
+
+        <span class="close-btn"
+        onclick="closeLogin()">
+
+            ×
+
+        </span>
+
+        <h1>
+
+            Employee Login
+
+        </h1>
+
+        <form action="/login"
+        method="POST">
+
+            <input type="text"
+            name="username"
+            placeholder="Username"
+            required>
+
+            <input type="password"
+            name="password"
+            placeholder="Password"
+            required>
+
+            <button type="submit">
+
+                LOGIN
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<div class="footer">
+
+    <p>
+
+        © 2026 UTKAL COAL MINE
+        | Safety Department Portal
+
+    </p>
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    // ================= LOGIN MODAL =================
+
+    function openLogin(){
+
+        document
+        .getElementById("loginModal")
+        .style.display = "flex";
+    }
+
+    function closeLogin(){
+
+        document
+        .getElementById("loginModal")
+        .style.display = "none";
+    }
+
+    // ================= LANGUAGE =================
+
+    function setLanguage(lang){
+
+        if(lang == "hi"){
+
+            document.getElementById("mainHeading")
+            .innerHTML =
+            "सुरक्षा हमारी प्राथमिकता है";
+
+            document.getElementById("mainSubHeading")
+            .innerHTML =
+            "हर कर्मचारी सुरक्षित घर लौटे";
+
+            document.getElementById("msg1")
+            .innerHTML =
+            "खनन क्षेत्र में हमेशा PPE पहनें";
+
+            document.getElementById("msg2")
+            .innerHTML =
+            "दुर्घटनाओं से बचने हेतु सुरक्षा नियमों का पालन करें";
+
+            document.getElementById("msg3")
+            .innerHTML =
+            "असुरक्षित स्थिति की तुरंत सूचना दें";
+
+            document.getElementById("msg4")
+            .innerHTML =
+            "सुरक्षा जीवन बचाती है";
+
+            document.getElementById("aboutTitle")
+            .innerHTML =
+            "सुरक्षा पोर्टल के बारे में";
+
+            document.getElementById("aboutText")
+            .innerHTML =
+            "यह पोर्टल सुरक्षा जागरूकता, प्रशिक्षण वीडियो, कर्मचारी शिक्षण तथा दुर्घटना रोकथाम हेतु विकसित किया गया है।";
+
+        }else{
+
+            document.getElementById("mainHeading")
+            .innerHTML =
+            "SAFETY IS OUR PRIORITY";
+
+            document.getElementById("mainSubHeading")
+            .innerHTML =
+            "Every Employee Returns Home Safely";
+
+            document.getElementById("msg1")
+            .innerHTML =
+            "Always Wear PPE Inside Mining Area";
+
+            document.getElementById("msg2")
+            .innerHTML =
+            "Follow Safety Rules To Prevent Accidents";
+
+            document.getElementById("msg3")
+            .innerHTML =
+            "Report Unsafe Conditions Immediately";
+
+            document.getElementById("msg4")
+            .innerHTML =
+            "Safety Saves Lives";
+
+            document.getElementById("aboutTitle")
+            .innerHTML =
+            "About Safety Portal";
+
+            document.getElementById("aboutText")
+            .innerHTML =
+            "This portal is developed for safety awareness, training videos, employee learning and accident prevention inside mining operational areas.";
+        }
+    }
+
+</script>
+
+</body>
+</html>

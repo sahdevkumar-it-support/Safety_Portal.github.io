@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <h2>
+
+        EMPLOYEE MANAGEMENT
+
+    </h2>
+
+    <div>
+
+        <a href="/admin_dashboard"
+        class="logout-btn">
+
+            Dashboard
+
+        </a>
+
+        <a href="/logout"
+        class="logout-btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= SEARCH ================= -->
+
+<div class="employee-search-section">
+
+    <input type="text"
+    id="searchInput"
+    placeholder="Search Employee Code / Name / Department"
+    autocomplete="off"
+    onkeyup="searchEmployee()">
+
+</div>
+
+<!-- ================= MAIN GRID ================= -->
+
+<div class="employee-main-grid">
+
+    <!-- ================= FORM ================= -->
+
+    <div class="employee-form-card">
+
+        <h2>
+
+            Employee Form
+
+        </h2>
+
+        <form id="employeeForm"
+        action="/add_employee"
+        method="POST">
+
+            <!-- HIDDEN ID -->
+
+            <input type="hidden"
+            name="id"
+            id="id">
+
+            <!-- EMP CODE -->
+
+            <input type="text"
+            name="emp_code"
+            id="emp_code"
+            value="{{ next_emp_code }}"
+            readonly
+            class="readonly-field">
+
+            <!-- NAME -->
+
+            <input type="text"
+            name="name"
+            id="name"
+            placeholder="Employee Name"
+            required>
+
+            <!-- DEPARTMENT -->
+
+            <input type="text"
+            name="department"
+            id="department"
+            placeholder="Department"
+            required>
+
+            <!-- DESIGNATION -->
+
+            <input type="text"
+            name="designation"
+            id="designation"
+            placeholder="Designation"
+            required>
+
+            <!-- DOB -->
+
+            <input type="date"
+            name="dob"
+            id="dob"
+            required>
+
+            <!-- DOJ -->
+
+            <input type="date"
+            name="doj"
+            id="doj"
+            required>
+
+            <!-- CATEGORY -->
+
+            <input type="text"
+            name="category"
+            id="category"
+            placeholder="Category"
+            required>
+
+            <!-- MOBILE -->
+
+            <input type="text"
+            name="mobile"
+            id="mobile"
+            maxlength="10"
+            placeholder="Mobile Number"
+            required>
+
+            <!-- EMAIL -->
+
+            <input type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+            required>
+
+            <!-- USERNAME -->
+
+            <input type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            required>
+
+            <!-- PASSWORD -->
+
+            <input type="text"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required>
+
+            <!-- ROLE -->
+
+            <select name="role"
+            id="role">
+
+                <option value="user">
+
+                    User
+
+                </option>
+
+                <option value="admin">
+
+                    Admin
+
+                </option>
+
+            </select>
+
+            <!-- SAVE BUTTON -->
+
+            <button type="submit"
+            id="saveBtn">
+
+                SAVE EMPLOYEE
+
+            </button>
+
+            <!-- UPDATE BUTTON -->
+
+            <button type="submit"
+            id="updateBtn"
+            formaction="/update_employee"
+            style="display:none;background:green;margin-top:10px;">
+
+                UPDATE EMPLOYEE
+
+            </button>
+
+            <!-- CLEAR BUTTON -->
+
+            <button type="button"
+            onclick="clearForm()"
+            class="clear-btn">
+
+                CLEAR FORM
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- ================= TRACK CARD ================= -->
+
+    <div class="employee-track-card">
+
+        <h2>
+
+            Recent Entry Track
+
+        </h2>
+
+        <div class="track-box">
+
+            <h1>
+
+                {{ next_emp_code }}
+
+            </h1>
+
+            <p>
+
+                NEXT EMPLOYEE CODE
+
+            </p>
+
+        </div>
+
+        <div class="track-box">
+
+            <h1>
+
+                {{ employees|length }}
+
+            </h1>
+
+            <p>
+
+                TOTAL EMPLOYEES
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= TABLE ================= -->
+
+<div class="employee-table-section">
+
+    <h2>
+
+        Employee Records
+
+    </h2>
+
+    <div class="table-wrapper">
+
+        <table id="employeeTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>EMP CODE</th>
+                    <th>NAME</th>
+                    <th>DEPARTMENT</th>
+                    <th>DESIGNATION</th>
+                    <th>MOBILE</th>
+                    <th>ROLE</th>
+                    <th>ACTION</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for emp in employees %}
+
+                <tr onclick='fillForm(
+                    "{{ emp.id }}",
+                    "{{ emp.emp_code }}",
+                    "{{ emp.name }}",
+                    "{{ emp.department }}",
+                    "{{ emp.designation }}",
+                    "{{ emp.date_of_birth }}",
+                    "{{ emp.date_of_joining }}",
+                    "{{ emp.category }}",
+                    "{{ emp.mobile }}",
+                    "{{ emp.email }}",
+                    "{{ emp.username }}",
+                    "{{ emp.password }}",
+                    "{{ emp.role }}"
+                )'>
+
+                    <td>{{ emp.id }}</td>
+
+                    <td>{{ emp.emp_code }}</td>
+
+                    <td>{{ emp.name }}</td>
+
+                    <td>{{ emp.department }}</td>
+
+                    <td>{{ emp.designation }}</td>
+
+                    <td>{{ emp.mobile }}</td>
+
+                    <td>{{ emp.role }}</td>
+
+                    <td>
+
+                        <a href="/delete_employee/{{ emp.id }}"
+                        class="delete-btn">
+
+                            DELETE
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    // ================= FILL FORM =================
+
+    function fillForm(
+        id,
+        emp_code,
+        name,
+        department,
+        designation,
+        dob,
+        doj,
+        category,
+        mobile,
+        email,
+        username,
+        password,
+        role
+    ){
+
+        document.getElementById("id").value = id;
+
+        document.getElementById("emp_code").value = emp_code;
+
+        document.getElementById("name").value = name;
+
+        document.getElementById("department").value = department;
+
+        document.getElementById("designation").value = designation;
+
+        document.getElementById("dob").value = dob;
+
+        document.getElementById("doj").value = doj;
+
+        document.getElementById("category").value = category;
+
+        document.getElementById("mobile").value = mobile;
+
+        document.getElementById("email").value = email;
+
+        document.getElementById("username").value = username;
+
+        document.getElementById("password").value = password;
+
+        document.getElementById("role").value = role;
+
+        // BUTTON SWITCH
+
+        document.getElementById("saveBtn")
+        .style.display = "none";
+
+        document.getElementById("updateBtn")
+        .style.display = "block";
+
+        // FOCUS
+
+        document.getElementById("name").focus();
+    }
+
+    // ================= CLEAR FORM =================
+
+    function clearForm(){
+
+        document.getElementById("employeeForm").reset();
+
+        document.getElementById("id").value = "";
+
+        document.getElementById("saveBtn")
+        .style.display = "block";
+
+        document.getElementById("updateBtn")
+        .style.display = "none";
+
+        location.reload();
+    }
+
+    // ================= SEARCH =================
+
+    function searchEmployee(){
+
+        let input = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+        let table = document
+        .getElementById("employeeTable");
+
+        let tr = table
+        .getElementsByTagName("tr");
+
+        for(let i=1; i<tr.length; i++){
+
+            let rowText =
+            tr[i].innerText.toLowerCase();
+
+            if(rowText.includes(input)){
+
+                tr[i].style.display = "";
+
+            }else{
+
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    // ================= MOBILE AUTO NEXT =================
+
+    document
+    .getElementById("mobile")
+    .addEventListener("input", function(){
+
+        if(this.value.length == 10){
+
+            document
+            .getElementById("email")
+            .focus();
+        }
+
+    });
+
+    // ================= ENTER KEY NAVIGATION =================
+
+    const formElements = document.querySelectorAll(
+        "#employeeForm input, #employeeForm select"
+    );
+
+    formElements.forEach((element, index) => {
+
+        element.addEventListener("keydown", function(e){
+
+            if(e.key === "Enter"){
+
+                e.preventDefault();
+
+                let next =
+                formElements[index + 1];
+
+                if(next){
+
+                    next.focus();
+
+                }else{
+
+                    document
+                    .getElementById("saveBtn")
+                    .click();
+                }
+            }
+        });
+
+    });
+
+    // ================= PAGE LOAD =================
+
+    window.onload = function(){
+
+        document
+        .getElementById("name")
+        .focus();
+    }
+
+</script>
+
+</body>
+</html>

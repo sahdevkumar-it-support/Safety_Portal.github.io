@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <h2>UTKAL COAL MINE - ADMIN PANEL</h2>
+
+    <div>
+
+        <a href="/user_dashboard" class="logout-btn">
+            View Videos
+        </a>
+
+        <a href="/logout" class="logout-btn">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= SEARCH ================= -->
+
+<div class="search-section">
+
+    <input type="text"
+    id="searchInput"
+    placeholder="Search Emp Code / Name / Department"
+    autocomplete="off"
+    onkeyup="searchEmployee()">
+
+</div>
+
+<!-- ================= MAIN AREA ================= -->
+
+<div class="admin-main">
+
+    <!-- ================= EMPLOYEE MANAGEMENT ================= -->
+
+    <div class="admin-card">
+
+        <h2>Employee Management</h2>
+
+        <form id="employeeForm"
+        action="/add_employee"
+        method="POST">
+
+            <input type="hidden" name="id" id="id">
+
+            <!-- EMP CODE -->
+
+            <input type="text"
+            name="emp_code"
+            id="emp_code"
+            value="{{ next_emp_code }}"
+            readonly
+            class="readonly-field">
+
+            <!-- NAME -->
+
+            <input type="text"
+            name="name"
+            id="name"
+            placeholder="Employee Name"
+            required>
+
+            <!-- DEPARTMENT -->
+
+            <input type="text"
+            name="department"
+            id="department"
+            placeholder="Department"
+            required>
+
+            <!-- DESIGNATION -->
+
+            <input type="text"
+            name="designation"
+            id="designation"
+            placeholder="Designation"
+            required>
+
+            <!-- DOB -->
+
+            <input type="date"
+            name="dob"
+            id="dob"
+            required>
+
+            <!-- DOJ -->
+
+            <input type="date"
+            name="doj"
+            id="doj"
+            required>
+
+            <!-- CATEGORY -->
+
+            <input type="text"
+            name="category"
+            id="category"
+            placeholder="Category"
+            required>
+
+            <!-- MOBILE -->
+
+            <input type="text"
+            name="mobile"
+            id="mobile"
+            maxlength="10"
+            placeholder="Mobile Number"
+            required>
+
+            <!-- EMAIL -->
+
+            <input type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+            required>
+
+            <!-- USERNAME -->
+
+            <input type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            required>
+
+            <!-- PASSWORD -->
+
+            <input type="text"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required>
+
+            <!-- ROLE -->
+
+            <select name="role" id="role">
+
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+
+            </select>
+
+            <!-- SAVE BUTTON -->
+
+            <button type="submit"
+            id="saveBtn">
+
+                SAVE EMPLOYEE
+
+            </button>
+
+            <!-- UPDATE BUTTON -->
+
+            <button type="submit"
+            id="updateBtn"
+            formaction="/update_employee"
+            style="display:none;background:green;margin-top:10px;">
+
+                UPDATE EMPLOYEE
+
+            </button>
+
+            <!-- CLEAR BUTTON -->
+
+            <button type="button"
+            onclick="clearForm()"
+            class="clear-btn">
+
+                CLEAR FORM
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- ================= VIDEO SECTION ================= -->
+
+    <div class="admin-card">
+
+        <h2>Add Safety Video</h2>
+
+        <form action="/add_video"
+        method="POST">
+
+            <input type="text"
+            name="title"
+            placeholder="Video Title"
+            required>
+
+            <input type="text"
+            name="youtube_link"
+            placeholder="YouTube Embed Link"
+            required>
+
+            <input type="text"
+            name="category"
+            placeholder="Category"
+            required>
+
+            <button type="submit">
+
+                ADD VIDEO
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ================= EMPLOYEE TABLE ================= -->
+
+<div class="table-container">
+
+    <h2>Employee List</h2>
+
+    <table id="employeeTable">
+
+        <tr>
+
+            <th>ID</th>
+            <th>EMP CODE</th>
+            <th>NAME</th>
+            <th>DEPARTMENT</th>
+            <th>MOBILE</th>
+            <th>ROLE</th>
+            <th>ACTION</th>
+
+        </tr>
+
+        {% for emp in employees %}
+
+        <tr onclick='fillForm(
+            "{{ emp.id }}",
+            "{{ emp.emp_code }}",
+            "{{ emp.name }}",
+            "{{ emp.department }}",
+            "{{ emp.designation }}",
+            "{{ emp.date_of_birth }}",
+            "{{ emp.date_of_joining }}",
+            "{{ emp.category }}",
+            "{{ emp.mobile }}",
+            "{{ emp.email }}",
+            "{{ emp.username }}",
+            "{{ emp.password }}",
+            "{{ emp.role }}"
+        )'>
+
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.emp_code }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.department }}</td>
+            <td>{{ emp.mobile }}</td>
+            <td>{{ emp.role }}</td>
+
+            <td>
+
+                <a href="/delete_employee/{{ emp.id }}"
+                class="delete-btn">
+
+                    DELETE
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    // ================= FILL FORM =================
+
+    function fillForm(
+        id,
+        emp_code,
+        name,
+        department,
+        designation,
+        dob,
+        doj,
+        category,
+        mobile,
+        email,
+        username,
+        password,
+        role
+    ){
+
+        document.getElementById("id").value = id;
+
+        document.getElementById("emp_code").value = emp_code;
+
+        document.getElementById("name").value = name;
+
+        document.getElementById("department").value = department;
+
+        document.getElementById("designation").value = designation;
+
+        document.getElementById("dob").value = dob;
+
+        document.getElementById("doj").value = doj;
+
+        document.getElementById("category").value = category;
+
+        document.getElementById("mobile").value = mobile;
+
+        document.getElementById("email").value = email;
+
+        document.getElementById("username").value = username;
+
+        document.getElementById("password").value = password;
+
+        document.getElementById("role").value = role;
+
+        // BUTTON SWITCH
+
+        document.getElementById("saveBtn").style.display = "none";
+
+        document.getElementById("updateBtn").style.display = "block";
+
+        // FOCUS
+
+        document.getElementById("name").focus();
+    }
+
+    // ================= CLEAR FORM =================
+
+    function clearForm(){
+
+        document.getElementById("employeeForm").reset();
+
+        document.getElementById("id").value = "";
+
+        document.getElementById("saveBtn").style.display = "block";
+
+        document.getElementById("updateBtn").style.display = "none";
+
+        // RELOAD PAGE FOR NEXT EMP CODE
+
+        location.reload();
+    }
+
+    // ================= SEARCH =================
+
+    function searchEmployee(){
+
+        let input =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+        let table =
+        document.getElementById("employeeTable");
+
+        let tr =
+        table.getElementsByTagName("tr");
+
+        for(let i=1; i<tr.length; i++){
+
+            let rowText =
+            tr[i].innerText.toLowerCase();
+
+            if(rowText.includes(input)){
+
+                tr[i].style.display = "";
+
+            }else{
+
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    // ================= MOBILE AUTO JUMP =================
+
+    document
+    .getElementById("mobile")
+    .addEventListener("input", function(){
+
+        if(this.value.length == 10){
+
+            document.getElementById("email").focus();
+        }
+
+    });
+
+    // ================= ENTER NAVIGATION =================
+
+    const formElements = document.querySelectorAll(
+        "#employeeForm input, #employeeForm select"
+    );
+
+    formElements.forEach((element, index) => {
+
+        element.addEventListener("keydown", function(e){
+
+            if(e.key === "Enter"){
+
+                e.preventDefault();
+
+                let next =
+                formElements[index + 1];
+
+                if(next){
+
+                    next.focus();
+
+                }else{
+
+                    document.getElementById("saveBtn").click();
+                }
+            }
+        });
+
+    });
+
+    // ================= PAGE LOAD =================
+
+    window.onload = function(){
+
+        document.getElementById("name").focus();
+    }
+
+</script>
+
+</body>
+</html>

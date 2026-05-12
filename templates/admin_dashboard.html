@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <div>
+
+        <h2>
+
+            UTKAL COAL MINE
+
+        </h2>
+
+        <p class="nav-subtitle">
+
+            Safety Training Admin Panel
+
+        </p>
+
+    </div>
+
+    <div>
+
+        <a href="/logout"
+        class="logout-btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= HERO ================= -->
+
+<div class="admin-hero">
+
+    <div class="admin-hero-overlay"></div>
+
+    <div class="admin-hero-content">
+
+        <h1>
+
+            ADMIN CONTROL PANEL
+
+        </h1>
+
+        <p>
+
+            Employee • Training • Safety • Monitoring
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= DASHBOARD CARDS ================= -->
+
+<div class="dashboard-home">
+
+    <!-- TOTAL EMPLOYEE -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+
+            👨‍🏭
+
+        </div>
+
+        <h1>
+
+            {{ total_employee }}
+
+        </h1>
+
+        <p>
+
+            Total Employees
+
+        </p>
+
+    </div>
+
+    <!-- ACTIVE EMPLOYEE -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+
+            ✅
+
+        </div>
+
+        <h1>
+
+            {{ active_employee }}
+
+        </h1>
+
+        <p>
+
+            Active Employees
+
+        </p>
+
+    </div>
+
+    <!-- ADMIN -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+
+            🛡️
+
+        </div>
+
+        <h1>
+
+            {{ total_admin }}
+
+        </h1>
+
+        <p>
+
+            Total Admin
+
+        </p>
+
+    </div>
+
+    <!-- VIDEOS -->
+
+    <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+
+            🎥
+
+        </div>
+
+        <h1>
+
+            {{ total_videos }}
+
+        </h1>
+
+        <p>
+
+            Total Videos
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= QUICK ACCESS ================= -->
+
+<div class="quick-access-section">
+
+    <h1>
+
+        Quick Access Menu
+
+    </h1>
+
+    <div class="admin-menu">
+
+        <!-- EMPLOYEE MANAGEMENT -->
+
+        <a href="/empmgt"
+        class="menu-btn">
+
+            <span class="menu-icon">
+
+                👨‍💼
+
+            </span>
+
+            <span>
+
+                Employee Management
+
+            </span>
+
+        </a>
+
+        <!-- VIDEO MANAGEMENT -->
+
+        <a href="/videomgt"
+        class="menu-btn">
+
+            <span class="menu-icon">
+
+                🎬
+
+            </span>
+
+            <span>
+
+                Video Management
+
+            </span>
+
+        </a>
+
+        <!-- USER DASHBOARD -->
+
+        <a href="/user_dashboard"
+        class="menu-btn">
+
+            <span class="menu-icon">
+
+                🌐
+
+            </span>
+
+            <span>
+
+                User Dashboard
+
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= RECENT ACTIVITY ================= -->
+
+<div class="recent-section">
+
+    <h1>
+
+        System Overview
+
+    </h1>
+
+    <div class="recent-grid">
+
+        <div class="recent-card">
+
+            <h2>
+
+                Employee Module
+
+            </h2>
+
+            <p>
+
+                Add, Update, Search and
+                Manage Employee Data
+
+            </p>
+
+        </div>
+
+        <div class="recent-card">
+
+            <h2>
+
+                Training Videos
+
+            </h2>
+
+            <p>
+
+                Upload and Manage
+                Safety Awareness Videos
+
+            </p>
+
+        </div>
+
+        <div class="recent-card">
+
+            <h2>
+
+                Future Modules
+
+            </h2>
+
+            <p>
+
+                Training Completion,
+                Certificates & Reports
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<div class="footer">
+
+    <p>
+
+        © 2026 UTKAL COAL MINE
+        | Safety Department Admin Panel
+
+    </p>
+
+</div>
+
+</body>
+
+</html>

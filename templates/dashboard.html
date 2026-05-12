@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= TOP HEADER ================= -->
+
+<div class="user-header">
+
+    <div class="logo-section">
+
+        <h1>UTKAL COAL MINE</h1>
+
+        <p>Safety Training Portal</p>
+
+    </div>
+
+    <div class="user-info">
+
+        <span>
+
+            Welcome,
+            {{ username }}
+
+        </span>
+
+        <a href="/logout"
+        class="logout-btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= BANNER ================= -->
+
+<div class="banner-section">
+
+    <div class="banner-overlay"></div>
+
+    <div class="banner-content">
+
+        <h1>सुरक्षा प्रशिक्षण वीडियो</h1>
+
+        <p>
+            SAFETY TRAINING VIDEOS
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= SEARCH BAR ================= -->
+
+<div class="video-search-section">
+
+    <input type="text"
+    id="videoSearch"
+    placeholder="Search Safety Videos..."
+    onkeyup="searchVideos()">
+
+</div>
+
+<!-- ================= VIDEO SECTION ================= -->
+
+<div class="video-main-container">
+
+    {% for video in videos %}
+
+    <div class="coal-video-card">
+
+        <!-- TITLE -->
+
+        <div class="video-title">
+
+            {{ video.title }}
+
+        </div>
+
+        <!-- CATEGORY -->
+
+        <div class="video-category">
+
+            {{ video.category }}
+
+        </div>
+
+        <!-- VIDEO -->
+
+        <div class="video-frame">
+
+            <iframe
+            src="{{ video.youtube_link }}"
+            title="Safety Video"
+            allowfullscreen>
+
+            </iframe>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<div class="footer">
+
+    <p>
+
+        © 2026 UTKAL COAL MINE
+        | Safety Department Portal
+
+    </p>
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    function searchVideos(){
+
+        let input = document
+        .getElementById("videoSearch")
+        .value
+        .toLowerCase();
+
+        let cards =
+        document.getElementsByClassName("coal-video-card");
+
+        for(let i=0; i<cards.length; i++){
+
+            let text =
+            cards[i].innerText.toLowerCase();
+
+            if(text.includes(input)){
+
+                cards[i].style.display = "";
+
+            }else{
+
+                cards[i].style.display = "none";
+            }
+        }
+    }
+
+</script>
+
+</body>
+</html>

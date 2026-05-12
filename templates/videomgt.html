@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Video Management</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>VIDEO MANAGEMENT</h2>
+
+    <div>
+
+        <a href="/admin_dashboard"
+        class="logout-btn">
+
+            Dashboard
+
+        </a>
+
+        <a href="/logout"
+        class="logout-btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+<div class="admin-main">
+
+    <div class="admin-card">
+
+        <h2>Add Safety Video</h2>
+
+        <form action="/add_video"
+        method="POST">
+
+            <input type="text"
+            name="title"
+            placeholder="Video Title"
+            required>
+
+            <input type="text"
+            name="youtube_link"
+            placeholder="YouTube Link"
+            required>
+
+            <input type="text"
+            name="category"
+            placeholder="Category"
+            required>
+
+            <button type="submit">
+
+                ADD VIDEO
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="table-container">
+
+    <h2>Video List</h2>
+
+    <table>
+
+        <tr>
+
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>CATEGORY</th>
+            <th>ACTION</th>
+
+        </tr>
+
+        {% for video in videos %}
+
+        <tr>
+
+            <td>{{ video.id }}</td>
+            <td>{{ video.title }}</td>
+            <td>{{ video.category }}</td>
+
+            <td>
+
+                <a href="/delete_video/{{ video.id }}"
+                class="delete-btn">
+
+                    DELETE
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>

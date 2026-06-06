@@ -9,6 +9,7 @@ import pymongo
 import qrcode
 import io
 from flask import send_file
+import os
 # ==========================================
 # 1. APPLICATION & DATABASE INITIALIZATION
 # ==========================================

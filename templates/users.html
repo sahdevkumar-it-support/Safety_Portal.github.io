@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Portal - User Control Station</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+</head>
+<body>
+
+<div class="page-container">
+    
+    <header class="management-header">
+        <div class="header-left">
+            <a href="/dashboard" class="btn-dashboard">
+                <i class="fa-solid fa-arrow-left"></i> Dashboard Back
+            </a>
+            <h2><i class="fa-solid fa-users-gear animate-glow"></i> User Authorization Station</h2>
+            <p>नए क्रेडेंशियल बनाएं, अनुपालन भूमिकाएं (Roles) असाइन करें और सिस्टम एक्सेस प्रबंधित करें।</p>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-alert alert-{{ category }}">
+             <i class="fa-solid {% if category == 'success' %}fa-circle-check{% else %}fa-circle-exclamation{% endif %}"></i>
+             <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="workspace-grid">
+        
+        <div class="panel form-panel">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-user-plus"></i> Register System User</h3>
+                <p>सुरक्षित और एन्क्रिप्टेड यूजर आईडेंटिटी बनाने के लिए फ़ील्ड भरें।</p>
+            </div>
+
+            <form action="/add_user" method="POST" class="modern-form">
+                
+                <div class="form-group">
+                    <label for="username"><i class="fa-solid fa-user-tie"></i> Username</label>
+                    <div class="input-block">
+                        <input type="text" id="username" name="username" placeholder="जैसे: amit_safety" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email"><i class="fa-solid fa-envelope"></i> Email Address</label>
+                    <div class="input-block">
+                        <input type="email" id="email" name="email" placeholder="amit@company.com" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><i class="fa-solid fa-lock"></i> Security Password</label>
+                    <div class="input-block">
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role"><i class="fa-solid fa-user-shield"></i> Access Role Level</label>
+                    <div class="select-block">
+                        <select id="role" name="role" required>
+                            <option value="" disabled selected>पहुंच स्तर (Role Level) चुनें...</option>
+                            <option value="Admin">Admin (Full System Control)</option>
+                            <option value="User">User (Watch Videos Only)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit-user">
+                    <i class="fa-solid fa-shield-halved"></i> Authorize & Ingest User
+                </button>
+
+            </form>
+        </div>
+
+        <div class="panel list-panel">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-address-book"></i> Active Authenticated Records</h3>
+                <p>सुरक्षा अनुमतियों की निगरानी करें और किसी भी समय क्रेडेंशियल निरस्त करें।</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="premium-data-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 60px;">S.No.</th>
+                            <th>User Profile Details</th>
+                            <th>Role Clearance</th>
+                            <th class="text-center" style="width: 130px;">Action Matrix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td class="text-center">
+                                <span class="serial-tag">{{ loop.index }}</span>
+                            </td>
+                            <td>
+                                <div class="profile-meta-box">
+                                    <div class="avatar-circle">
+                                        <i class="fa-solid fa-user-shield"></i>
+                                    </div>
+                                    <div class="profile-details">
+                                        <span class="user-id-name">{{ user.username }}</span>
+                                        <span class="user-mail-id"><i class="fa-regular fa-envelope"></i> {{ user.email }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="role-badge badge-{{ user.role|lower }}">
+                                    <i class="fa-solid {% if user.role == 'Admin' %}fa-user-ninja{% else %}fa-eye{% endif %}"></i> 
+                                    {{ user.role }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a href="/delete_user/{{ user._id }}" 
+                                   class="btn-action-delete" 
+                                   onclick="return confirm('⚠️ SYSTEM SECURITY CAUTION:\n\nKya aap such me is identity access token ko database se permanent trace-out/delete karna chahte hain?');">
+                                    <i class="fa-solid fa-user-minus"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="empty-state-row">
+                                <div class="empty-vector">
+                                    <i class="fa-solid fa-users-slash"></i>
+                                    <p>Database table structure empty. Naya profile load karein!</p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

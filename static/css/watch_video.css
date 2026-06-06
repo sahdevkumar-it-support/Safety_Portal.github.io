@@ -1,0 +1,368 @@
+/* ==========================================================================
+   MOBILE-FIRST SECURITY VIDEO PORTAL STYLESHEET
+   ========================================================================== */
+
+/* Base Config */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+}
+
+body {
+    background: #0f172a; /* Premium Dark Theme */
+    color: #e2e8f0;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 1. Header Banner Style */
+.safety-banner {
+    position: relative;
+    width: 100%;
+    padding: 35px 20px;
+    background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470') center/cover no-repeat;
+    border-bottom: 2px solid #1e3a8a;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+    z-index: 1;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.banner-content h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.banner-content h1 i {
+    color: #3b82f6;
+}
+
+.banner-content p {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* 2. Grid Container & Workspace Mechanics */
+.portal-container {
+    max-width: 1650px;
+    margin: 15px auto;
+    padding: 0 12px;
+}
+
+/* Mobile Default: Single Column (Video Top par, Categories niche) */
+.portal-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.sidebar-panel, .theatre-panel {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Header Title Bars */
+.panel-title-bar {
+    background: rgba(15, 23, 42, 0.4);
+    padding: 16px;
+    border-bottom: 1px solid #334155;
+}
+
+.panel-title-bar h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 3. Accordion Styling (Mobile Touch Friendly) */
+.accordion-container {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accordion-header {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid #334155;
+    padding: 15px;
+    border-radius: 10px;
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.accordion-header:active, .accordion-header.active {
+    background: linear-gradient(90deg, #1e293b 0%, #1e3a8a 100%);
+    border-color: #2563eb;
+    color: white;
+}
+
+.icon-folder {
+    color: #3b82f6;
+    margin-right: 6px;
+}
+
+.arrow-icon {
+    font-size: 11px;
+    color: #64748b;
+    transition: transform 0.25s ease;
+}
+
+.accordion-header.active .arrow-icon {
+    transform: rotate(180deg);
+    color: #ffffff;
+}
+
+/* Accordion Expansion Engine */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(15, 23, 42, 0.25);
+    border-radius: 0 0 10px 10px;
+}
+
+.accordion-content.open {
+    max-height: 600px;
+    border-left: 3px solid #2563eb;
+    padding: 6px 0;
+}
+
+/* 4. Video List Links (Thick Padding for Mobile Taps) */
+.video-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 8px;
+}
+
+.video-item {
+    padding: 14px 12px; /* Bigger touch area for fingers */
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: #94a3b8;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+}
+
+.video-item:active {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.play-status-icon {
+    color: #475569;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+/* Selection State Colors */
+.video-item.selected-playing {
+    background: rgba(37, 99, 235, 0.15) !important;
+    color: #60a5fa !important;
+    font-weight: 600;
+}
+
+.video-item.selected-playing .play-status-icon {
+    color: #60a5fa !important;
+}
+
+.empty-video-log {
+    padding: 12px;
+    text-align: center;
+    font-size: 12.5px;
+    color: #475569;
+}
+
+/* 5. Theatre Player Layout Deck */
+.player-card {
+    padding: 16px;
+}
+
+.player-header {
+    margin-bottom: 12px;
+}
+
+.live-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.player-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* 16:9 Aspect Ratio Controller box */
+.video-ratio-box {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* Fixed 16:9 box screen */
+    background: #090d16;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.video-ratio-box iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+/* Static Placeholder Screens */
+.video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    text-align: center;
+    padding: 15px;
+}
+
+.placeholder-content {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.fluid-icon {
+    font-size: 36px;
+    color: #334155;
+}
+
+.placeholder-content h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.placeholder-content p {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Glowing Loop Effect */
+.animate-glow {
+    animation: bluePulse 3s infinite ease-in-out;
+}
+
+@keyframes bluePulse {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.4)); }
+    50% { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.7)); }
+}
+
+/* ==========================================================================
+   6. DESKTOP MEDIA QUERIES (LAPTOP/TAB DESIGN BREAKPOINT)
+   ========================================================================== */
+@media (min-width: 992px) {
+    .safety-banner {
+        padding: 50px 40px;
+        text-align: left;
+    }
+    .banner-content h1 {
+        font-size: 28px;
+        justify-content: flex-start;
+    }
+    .banner-content p {
+        font-size: 15px;
+    }
+    .portal-container {
+        padding: 0 20px;
+        margin: 30px auto;
+    }
+    /* Side by Side Mode on Desktops */
+    .portal-layout-grid {
+        grid-template-columns: 460px 1fr; 
+        gap: 30px;
+    }
+    /* Swapping visual order so Categories always stay on Left in Desktop */
+    .sidebar-panel {
+        grid-column: 1;
+    }
+    .theatre-panel {
+        grid-column: 2;
+    }
+    .player-card {
+        padding: 25px;
+    }
+    .player-header h2 {
+        font-size: 20px;
+    }
+    .video-item {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+    .fluid-icon {
+        font-size: 50px;
+    }
+    .placeholder-content h3 {
+        font-size: 18px;
+    }
+    .placeholder-content p {
+        font-size: 13.5px;
+    }
+}

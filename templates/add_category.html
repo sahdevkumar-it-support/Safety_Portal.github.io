@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Portal - Category Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category.css') }}">
+</head>
+<body>
+
+<div class="page-container">
+    
+    <div class="breadcrumb-area">
+        <a href="/dashboard" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <h2><i class="fa-solid fa-folder-gear"></i> Category Control Center</h2>
+    </div>
+
+    <div class="workspace-grid">
+        
+        <div class="panel card-form">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-folder-plus"></i> Create New Category</h3>
+                <p>Add a main classification for your safety training videos.</p>
+            </div>
+            
+            <form method="POST" class="modern-form">
+                <div class="form-group">
+                    <label for="title">Category Title (Hindi / English)</label>
+                    <div class="input-container">
+                        <i class="fa-solid fa-pen-to-square input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="title"
+                            name="title" 
+                            placeholder="जैसे : टिपर संबंधी दुर्घटनाएँ" 
+                            required 
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Category
+                </button>
+            </form>
+        </div>
+
+        <div class="panel card-list">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-list-check"></i> Available Categories</h3>
+                <p>Manage, modify, or cascade delete existing items.</p>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="premium-table">
+                    <thead>
+                        <tr>
+                            <th># ID</th>
+                            <th>Category Name</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat in categories %}
+                        <tr>
+                            <td class="col-id">{{ loop.index }}</td>
+                            <td class="col-title"><strong>{{ cat.title }}</strong></td>
+                            <td class="col-actions text-center">
+                                <a href="/edit_category/{{ cat._id }}" class="action-btn edit-btn" title="Edit Name">
+                                    <i class="fa-solid fa-pen"></i> Update
+                                </a>
+                                <a href="/delete_category/{{ cat._id }}" class="action-btn delete-btn" title="Delete Category & Videos" onclick="return confirm('Kya aap sach me is category aur iske andar ke saare videos delete karna chahte hain?');">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </a>
+                             </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="no-data">
+                                <i class="fa-solid fa-folder-open"></i> No categories found. Create one on the left panel!
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

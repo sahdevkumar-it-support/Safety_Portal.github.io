@@ -1,0 +1,516 @@
+/* ==========================================================================
+   VIDEO MANAGEMENT HUB STYLESHEET WITH INLINE MODAL PLAYER
+   ========================================================================== */
+
+/* Global Properties Configuration */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #0f172a; /* Futuristic dark dashboard base color */
+    color: #f8fafc;
+    min-height: 100vh;
+    padding: 40px;
+    overflow-x: hidden;
+}
+
+.page-container {
+    max-width: 1550px;
+    margin: 0 auto;
+}
+
+/* 1. Header Navigation Layout */
+.management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 25px;
+    margin-bottom: 35px;
+}
+
+.header-left h2 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.header-left h2 i {
+    color: #3b82f6; /* Cyan blue accent */
+}
+
+.header-left p {
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Header Navigation Anchors */
+.btn-dashboard, .btn-logout {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-dashboard {
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-dashboard:hover {
+    color: #ffffff;
+    background: #24324d;
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(-3px);
+}
+
+.btn-logout {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.4);
+    transform: translateY(-1px);
+}
+
+/* 2. Main Double Columns Grid Splitter */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Panel Containers Core */
+.panel {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.panel-header {
+    margin-bottom: 25px;
+}
+
+.panel-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.panel-header p {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* 3. Modern Input Controls Form Matrix */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-block input, .select-block select {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 2px solid #334155;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #ffffff;
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-block input:focus, .select-block select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.input-block input::placeholder {
+    color: #475569;
+}
+
+/* Dropdown Field Tweaks */
+.select-block {
+    position: relative;
+    width: 100%;
+}
+
+.select-block select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    padding-right: 45px;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+    font-size: 14px;
+}
+
+/* Submit Action Button Color System */
+.btn-submit-video {
+    width: 100%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.btn-submit-video:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+}
+
+/* 4. Highly Elegant Data Table Grid Layout */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.premium-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.premium-data-table th {
+    background: rgba(15, 23, 42, 0.45);
+    padding: 16px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #334155;
+}
+
+.premium-data-table td {
+    padding: 16px 20px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    vertical-align: middle;
+}
+
+.premium-data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.012);
+}
+
+/* Serial ID Alignment */
+.col-serial {
+    font-weight: 700;
+    color: #475569;
+}
+
+.serial-tag {
+    background: rgba(15, 23, 42, 0.4);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #334155;
+    font-size: 12px;
+}
+
+/* Thumbnail and Meta Integration Element Blueprint */
+.asset-meta-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer; /* Pointer to show clickable area */
+}
+
+.yt-thumbnail {
+    width: 100px;
+    height: 56px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0f172a;
+}
+
+.yt-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37, 99, 235, 0.7); /* Custom blue color overlay on hover */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.asset-meta-box:hover .play-overlay {
+    opacity: 1;
+}
+
+.asset-meta-box:hover .asset-title {
+    color: #3b82f6;
+}
+
+.asset-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 400px;
+}
+
+.asset-title {
+    font-weight: 600;
+    color: #f1f5f9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+}
+
+.asset-token {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Category Badge Graphic Matrix */
+.category-badge {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+/* Cascade Delete Interactive Link Button */
+.btn-action-delete {
+    text-decoration: none;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-action-delete:hover {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Empty State Styling Row */
+.empty-state-row {
+    padding: 70px !important;
+    text-align: center;
+}
+
+.empty-vector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+}
+
+.empty-vector i {
+    font-size: 38px;
+}
+
+/* ==========================================================================
+   5. PREMIUM MODAL POPUP LAYER MECHANICS
+   ========================================================================== */
+.video-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content-card {
+    width: 90%;
+    max-width: 850px;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.video-modal-overlay.active .modal-content-card {
+    transform: scale(1);
+}
+
+.modal-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-player-header h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+}
+
+.close-modal-btn {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.close-modal-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* 16:9 Aspect Ratio Video Box Container */
+.video-ratio-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* Aspect Ratio 16:9 Dynamic formula */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.video-ratio-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Animation Framework entry matrices */
+.animate-slide-up {
+    animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Fluid Mechanics */
+@media (max-width: 1100px) {
+    .workspace-grid {
+        grid-template-columns: 1fr;
+    }
+    body {
+        padding: 20px;
+    }
+    .management-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}

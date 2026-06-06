@@ -1,0 +1,340 @@
+/* ==========================================================================
+   USER SYSTEM MASTER CONTROL INTERFACE STYLESHEET
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+}
+
+body {
+    background: #0f172a; /* Premium Charcoal Tone Framework */
+    color: #f8fafc;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.page-container {
+    max-width: 1550px;
+    margin: 0 auto;
+}
+
+/* Header Meta Panels styling rules */
+.management-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+}
+
+.header-left h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.header-left h2 i {
+    color: #10b981;
+}
+
+.header-left p {
+    color: #64748b;
+    font-size: 13.5px;
+    margin-top: 5px;
+}
+
+.btn-dashboard {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    width: max-content;
+    transition: all 0.2s ease;
+}
+
+.btn-dashboard:hover {
+    color: #ffffff;
+    background: #24324d;
+}
+
+/* Alert Notification Framework */
+.flash-alert {
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Layout Engine */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.panel {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.panel-header {
+    margin-bottom: 20px;
+}
+
+.panel-header h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.panel-header p {
+    font-size: 12.5px;
+    color: #64748b;
+}
+
+/* Form Styling Core configurations */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.input-block input, .select-block select {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 2px solid #334155;
+    border-radius: 10px;
+    font-size: 14.5px;
+    color: #ffffff;
+    outline: none;
+}
+
+.input-block input:focus, .select-block select:focus {
+    border-color: #10b981;
+}
+
+.select-block {
+    position: relative;
+}
+
+.select-block select {
+    appearance: none;
+    cursor: pointer;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+}
+
+.btn-submit-user {
+    width: 100%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* Tables configuration sets */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.premium-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.premium-data-table th {
+    background: rgba(15, 23, 42, 0.45);
+    padding: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    border-bottom: 2px solid #334155;
+    text-align: left;
+}
+
+.premium-data-table td {
+    padding: 14px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    vertical-align: middle;
+}
+
+.serial-tag {
+    background: rgba(15, 23, 42, 0.4);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.profile-meta-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-id-name {
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.user-mail-id {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.role-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-admin {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.badge-user {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.btn-action-delete {
+    text-decoration: none;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.empty-state-row {
+    padding: 40px !important;
+    text-align: center;
+}
+
+.empty-vector {
+    color: #475569;
+}
+
+.animate-glow {
+    animation: bluePulse 3s infinite ease-in-out;
+}
+
+@keyframes bluePulse {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.4)); }
+    50% { filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.7)); }
+}
+
+/* ==========================================================================
+   DESKTOP MEDIA BREAKPOINTS
+   ========================================================================== */
+@media (min-width: 992px) {
+    .management-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .workspace-grid {
+        grid-template-columns: 420px 1fr;
+        gap: 30px;
+    }
+    .panel {
+        padding: 25px;
+    }
+}

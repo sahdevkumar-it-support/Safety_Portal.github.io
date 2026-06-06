@@ -23,338 +23,367 @@
 
     <h2>
 
-        EMPLOYEE MANAGEMENT
+        Employee Management
 
     </h2>
 
-    <div>
+    <a href="/admin_dashboard"
+    class="logout-btn">
 
-        <a href="/admin_dashboard"
-        class="logout-btn">
+        Back
 
-            Dashboard
+    </a>
 
-        </a>
+</div>
 
-        <a href="/logout"
-        class="logout-btn">
+<!-- ================= FORM SECTION ================= -->
 
-            Logout
+<div class="employee-form-container">
 
-        </a>
+    <h1>
 
-    </div>
+        Employee Entry Panel
+
+    </h1>
+
+    <form id="employeeForm"
+    action="/add_employee"
+    method="POST">
+
+        <input type="hidden"
+        name="id"
+        id="id">
+
+        <div class="form-grid">
+
+            <!-- EMP CODE -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Employee Code
+
+                </label>
+
+                <input type="text"
+                name="emp_code"
+                id="emp_code"
+                value="{{ next_emp_code }}"
+                readonly>
+
+            </div>
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Employee Name
+
+                </label>
+
+                <input type="text"
+                name="name"
+                id="name"
+                required>
+
+            </div>
+
+            <!-- DEPARTMENT -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Department
+
+                </label>
+
+                <input type="text"
+                name="department"
+                id="department"
+                required>
+
+            </div>
+
+            <!-- DESIGNATION -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Designation
+
+                </label>
+
+                <input type="text"
+                name="designation"
+                id="designation"
+                required>
+
+            </div>
+
+            <!-- DOB -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Date Of Birth
+
+                </label>
+
+                <input type="date"
+                name="dob"
+                id="dob"
+                required>
+
+            </div>
+
+            <!-- DOJ -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Date Of Joining
+
+                </label>
+
+                <input type="date"
+                name="doj"
+                id="doj"
+                required>
+
+            </div>
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Category
+
+                </label>
+
+                <input type="text"
+                name="category"
+                id="category"
+                required>
+
+            </div>
+
+            <!-- MOBILE -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mobile Number
+
+                </label>
+
+                <input type="text"
+                name="mobile"
+                id="mobile"
+                required>
+
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Email Address
+
+                </label>
+
+                <input type="email"
+                name="email"
+                id="email"
+                required>
+
+            </div>
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Username
+
+                </label>
+
+                <input type="text"
+                name="username"
+                id="username"
+                required>
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Password
+
+                </label>
+
+                <input type="text"
+                name="password"
+                id="password"
+                required>
+
+            </div>
+
+            <!-- ROLE -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Role
+
+                </label>
+
+                <select name="role"
+                id="role">
+
+                    <option value="user">
+
+                        User
+
+                    </option>
+
+                    <option value="admin">
+
+                        Admin
+
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+
+        <div class="button-group">
+
+            <button type="submit"
+            class="add-btn"
+            id="submitBtn">
+
+                Add Employee
+
+            </button>
+
+            <button type="button"
+            class="reset-btn"
+            onclick="resetForm()">
+
+                New Entry
+
+            </button>
+
+        </div>
+
+    </form>
 
 </div>
 
 <!-- ================= SEARCH ================= -->
 
-<div class="employee-search-section">
+<div class="search-container">
 
     <input type="text"
     id="searchInput"
-    placeholder="Search Employee Code / Name / Department"
-    autocomplete="off"
+    placeholder="Search By Name Or Employee Code..."
     onkeyup="searchEmployee()">
-
-</div>
-
-<!-- ================= MAIN GRID ================= -->
-
-<div class="employee-main-grid">
-
-    <!-- ================= FORM ================= -->
-
-    <div class="employee-form-card">
-
-        <h2>
-
-            Employee Form
-
-        </h2>
-
-        <form id="employeeForm"
-        action="/add_employee"
-        method="POST">
-
-            <!-- HIDDEN ID -->
-
-            <input type="hidden"
-            name="id"
-            id="id">
-
-            <!-- EMP CODE -->
-
-            <input type="text"
-            name="emp_code"
-            id="emp_code"
-            value="{{ next_emp_code }}"
-            readonly
-            class="readonly-field">
-
-            <!-- NAME -->
-
-            <input type="text"
-            name="name"
-            id="name"
-            placeholder="Employee Name"
-            required>
-
-            <!-- DEPARTMENT -->
-
-            <input type="text"
-            name="department"
-            id="department"
-            placeholder="Department"
-            required>
-
-            <!-- DESIGNATION -->
-
-            <input type="text"
-            name="designation"
-            id="designation"
-            placeholder="Designation"
-            required>
-
-            <!-- DOB -->
-
-            <input type="date"
-            name="dob"
-            id="dob"
-            required>
-
-            <!-- DOJ -->
-
-            <input type="date"
-            name="doj"
-            id="doj"
-            required>
-
-            <!-- CATEGORY -->
-
-            <input type="text"
-            name="category"
-            id="category"
-            placeholder="Category"
-            required>
-
-            <!-- MOBILE -->
-
-            <input type="text"
-            name="mobile"
-            id="mobile"
-            maxlength="10"
-            placeholder="Mobile Number"
-            required>
-
-            <!-- EMAIL -->
-
-            <input type="email"
-            name="email"
-            id="email"
-            placeholder="Email Address"
-            required>
-
-            <!-- USERNAME -->
-
-            <input type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
-            required>
-
-            <!-- PASSWORD -->
-
-            <input type="text"
-            name="password"
-            id="password"
-            placeholder="Password"
-            required>
-
-            <!-- ROLE -->
-
-            <select name="role"
-            id="role">
-
-                <option value="user">
-
-                    User
-
-                </option>
-
-                <option value="admin">
-
-                    Admin
-
-                </option>
-
-            </select>
-
-            <!-- SAVE BUTTON -->
-
-            <button type="submit"
-            id="saveBtn">
-
-                SAVE EMPLOYEE
-
-            </button>
-
-            <!-- UPDATE BUTTON -->
-
-            <button type="submit"
-            id="updateBtn"
-            formaction="/update_employee"
-            style="display:none;background:green;margin-top:10px;">
-
-                UPDATE EMPLOYEE
-
-            </button>
-
-            <!-- CLEAR BUTTON -->
-
-            <button type="button"
-            onclick="clearForm()"
-            class="clear-btn">
-
-                CLEAR FORM
-
-            </button>
-
-        </form>
-
-    </div>
-
-    <!-- ================= TRACK CARD ================= -->
-
-    <div class="employee-track-card">
-
-        <h2>
-
-            Recent Entry Track
-
-        </h2>
-
-        <div class="track-box">
-
-            <h1>
-
-                {{ next_emp_code }}
-
-            </h1>
-
-            <p>
-
-                NEXT EMPLOYEE CODE
-
-            </p>
-
-        </div>
-
-        <div class="track-box">
-
-            <h1>
-
-                {{ employees|length }}
-
-            </h1>
-
-            <p>
-
-                TOTAL EMPLOYEES
-
-            </p>
-
-        </div>
-
-    </div>
 
 </div>
 
 <!-- ================= TABLE ================= -->
 
-<div class="employee-table-section">
+<div class="employee-table-container">
 
-    <h2>
+    <table id="employeeTable">
 
-        Employee Records
+        <thead>
 
-    </h2>
+            <tr>
 
-    <div class="table-wrapper">
+                <th>ID</th>
+                <th>EMP CODE</th>
+                <th>NAME</th>
+                <th>DEPARTMENT</th>
+                <th>DESIGNATION</th>
+                <th>MOBILE</th>
+                <th>USERNAME</th>
+                <th>ROLE</th>
+                <th>ACTION</th>
 
-        <table id="employeeTable">
+            </tr>
 
-            <thead>
+        </thead>
 
-                <tr>
+        <tbody>
 
-                    <th>ID</th>
-                    <th>EMP CODE</th>
-                    <th>NAME</th>
-                    <th>DEPARTMENT</th>
-                    <th>DESIGNATION</th>
-                    <th>MOBILE</th>
-                    <th>ROLE</th>
-                    <th>ACTION</th>
+            {% for emp in employees %}
 
-                </tr>
+            <tr onclick="fillForm(this)"
 
-            </thead>
+                data-id="{{ emp.id }}"
+                data-emp_code="{{ emp.emp_code }}"
+                data-name="{{ emp.name }}"
+                data-department="{{ emp.department }}"
+                data-designation="{{ emp.designation }}"
+                data-dob="{{ emp.date_of_birth }}"
+                data-doj="{{ emp.date_of_joining }}"
+                data-category="{{ emp.category }}"
+                data-mobile="{{ emp.mobile }}"
+                data-email="{{ emp.email }}"
+                data-username="{{ emp.username }}"
+                data-password="{{ emp.password }}"
+                data-role="{{ emp.role }}">
 
-            <tbody>
+                <td>{{ emp.id }}</td>
+                <td>{{ emp.emp_code }}</td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.department }}</td>
+                <td>{{ emp.designation }}</td>
+                <td>{{ emp.mobile }}</td>
+                <td>{{ emp.username }}</td>
+                <td>{{ emp.role }}</td>
 
-                {% for emp in employees %}
+                <td>
 
-                <tr onclick='fillForm(
-                    "{{ emp.id }}",
-                    "{{ emp.emp_code }}",
-                    "{{ emp.name }}",
-                    "{{ emp.department }}",
-                    "{{ emp.designation }}",
-                    "{{ emp.date_of_birth }}",
-                    "{{ emp.date_of_joining }}",
-                    "{{ emp.category }}",
-                    "{{ emp.mobile }}",
-                    "{{ emp.email }}",
-                    "{{ emp.username }}",
-                    "{{ emp.password }}",
-                    "{{ emp.role }}"
-                )'>
+                    <a href="/delete_employee/{{ emp.id }}"
+                    class="delete-btn"
+                    onclick="return confirm('Delete Employee ?')">
 
-                    <td>{{ emp.id }}</td>
+                        Delete
 
-                    <td>{{ emp.emp_code }}</td>
+                    </a>
 
-                    <td>{{ emp.name }}</td>
+                </td>
 
-                    <td>{{ emp.department }}</td>
+            </tr>
 
-                    <td>{{ emp.designation }}</td>
+            {% endfor %}
 
-                    <td>{{ emp.mobile }}</td>
+        </tbody>
 
-                    <td>{{ emp.role }}</td>
-
-                    <td>
-
-                        <a href="/delete_employee/{{ emp.id }}"
-                        class="delete-btn">
-
-                            DELETE
-
-                        </a>
-
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-    </div>
+    </table>
 
 </div>
 
@@ -362,168 +391,107 @@
 
 <script>
 
-    // ================= FILL FORM =================
+function fillForm(row)
+{
 
-    function fillForm(
-        id,
-        emp_code,
-        name,
-        department,
-        designation,
-        dob,
-        doj,
-        category,
-        mobile,
-        email,
-        username,
-        password,
-        role
-    ){
+    document.getElementById("id").value =
+    row.dataset.id;
 
-        document.getElementById("id").value = id;
+    document.getElementById("emp_code").value =
+    row.dataset.emp_code;
 
-        document.getElementById("emp_code").value = emp_code;
+    document.getElementById("name").value =
+    row.dataset.name;
 
-        document.getElementById("name").value = name;
+    document.getElementById("department").value =
+    row.dataset.department;
 
-        document.getElementById("department").value = department;
+    document.getElementById("designation").value =
+    row.dataset.designation;
 
-        document.getElementById("designation").value = designation;
+    document.getElementById("dob").value =
+    row.dataset.dob;
 
-        document.getElementById("dob").value = dob;
+    document.getElementById("doj").value =
+    row.dataset.doj;
 
-        document.getElementById("doj").value = doj;
+    document.getElementById("category").value =
+    row.dataset.category;
 
-        document.getElementById("category").value = category;
+    document.getElementById("mobile").value =
+    row.dataset.mobile;
 
-        document.getElementById("mobile").value = mobile;
+    document.getElementById("email").value =
+    row.dataset.email;
 
-        document.getElementById("email").value = email;
+    document.getElementById("username").value =
+    row.dataset.username;
 
-        document.getElementById("username").value = username;
+    document.getElementById("password").value =
+    row.dataset.password;
 
-        document.getElementById("password").value = password;
+    document.getElementById("role").value =
+    row.dataset.role;
 
-        document.getElementById("role").value = role;
+    // CHANGE BUTTON
 
-        // BUTTON SWITCH
+    document.getElementById("employeeForm").action =
+    "/update_employee";
 
-        document.getElementById("saveBtn")
-        .style.display = "none";
+    document.getElementById("submitBtn").innerHTML =
+    "Update Employee";
 
-        document.getElementById("updateBtn")
-        .style.display = "block";
+}
 
-        // FOCUS
+function resetForm()
+{
 
-        document.getElementById("name").focus();
-    }
+    location.reload();
 
-    // ================= CLEAR FORM =================
+}
 
-    function clearForm(){
+function searchEmployee()
+{
 
-        document.getElementById("employeeForm").reset();
+    let input =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
 
-        document.getElementById("id").value = "";
+    let rows =
+    document.querySelectorAll("#employeeTable tbody tr");
 
-        document.getElementById("saveBtn")
-        .style.display = "block";
+    rows.forEach(row => {
 
-        document.getElementById("updateBtn")
-        .style.display = "none";
+        let empcode =
+        row.cells[1].innerText.toLowerCase();
 
-        location.reload();
-    }
+        let name =
+        row.cells[2].innerText.toLowerCase();
 
-    // ================= SEARCH =================
+        if (
+            empcode.includes(input)
+            ||
+            name.includes(input)
+        )
+        {
 
-    function searchEmployee(){
+            row.style.display = "";
 
-        let input = document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-        let table = document
-        .getElementById("employeeTable");
-
-        let tr = table
-        .getElementsByTagName("tr");
-
-        for(let i=1; i<tr.length; i++){
-
-            let rowText =
-            tr[i].innerText.toLowerCase();
-
-            if(rowText.includes(input)){
-
-                tr[i].style.display = "";
-
-            }else{
-
-                tr[i].style.display = "none";
-            }
         }
-    }
 
-    // ================= MOBILE AUTO NEXT =================
+        else
+        {
 
-    document
-    .getElementById("mobile")
-    .addEventListener("input", function(){
+            row.style.display = "none";
 
-        if(this.value.length == 10){
-
-            document
-            .getElementById("email")
-            .focus();
         }
 
     });
 
-    // ================= ENTER KEY NAVIGATION =================
-
-    const formElements = document.querySelectorAll(
-        "#employeeForm input, #employeeForm select"
-    );
-
-    formElements.forEach((element, index) => {
-
-        element.addEventListener("keydown", function(e){
-
-            if(e.key === "Enter"){
-
-                e.preventDefault();
-
-                let next =
-                formElements[index + 1];
-
-                if(next){
-
-                    next.focus();
-
-                }else{
-
-                    document
-                    .getElementById("saveBtn")
-                    .click();
-                }
-            }
-        });
-
-    });
-
-    // ================= PAGE LOAD =================
-
-    window.onload = function(){
-
-        document
-        .getElementById("name")
-        .focus();
-    }
+}
 
 </script>
 
 </body>
+
 </html>

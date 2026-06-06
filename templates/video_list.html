@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Videos</title>
+</head>
+<body>
+
+<h2>All Videos</h2>
+
+<table border="1" cellpadding="10">
+
+<tr>
+
+<th>S.No</th>
+<th>Category</th>
+<th>Video Title</th>
+<th>Youtube URL</th>
+
+</tr>
+
+{% for video in videos %}
+
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<td>{{ video.category_name }}</td>
+
+<td>{{ video.title }}</td>
+
+<td>{{ video.youtube_url }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

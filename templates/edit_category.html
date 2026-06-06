@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Portal - Edit Category</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_category.css') }}">
+</head>
+<body>
+
+<div class="edit-wrapper">
+    <div class="edit-container animate-slide-up">
+        
+        <div class="edit-header">
+            <div class="edit-icon">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <h2>Modify Category</h2>
+            <p>Aap yahan se category ka naam badal sakte hain.</p>
+        </div>
+
+        <form method="POST" class="edit-form">
+            
+            <div class="form-group">
+                <label for="title">Category Title / Name</label>
+                <div class="input-block">
+                    <i class="fa-regular fa-folder-open field-icon"></i>
+                    <input 
+                        type="text" 
+                        id="title"
+                        name="title" 
+                        value="{{ category.title }}" 
+                        placeholder="Enter new category name..." 
+                        required 
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <a href="/categories" class="btn-cancel">
+                    <i class="fa-solid fa-xmark"></i> Cancel
+                </a>
+                
+                <button type="submit" class="btn-update">
+                    <i class="fa-solid fa-circle-check"></i> Update Now
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

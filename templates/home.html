@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सुरक्षा वीडियो - Safety Training Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/watch_video.css') }}">
+</head>
+<body>
+
+<div class="safety-banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+        <h1><i class="fa-solid fa-shield-halved animate-glow"></i> सुरक्षा वीडियो (Safety Training Portal)</h1>
+        <p>अपनी श्रेणी (Category) चुनें, सूची खोलें और संबंधित सुरक्षा प्रशिक्षण वीडियो देखें।</p>
+    </div>
+</div>
+
+<div class="portal-container">
+    <div class="portal-layout-grid">
+        
+        <aside class="sidebar-panel">
+            <div class="panel-title-bar">
+                <h3><i class="fa-solid fa-folder-tree"></i> सुरक्षा श्रेणियां (Categories)</h3>
+            </div>
+            
+            <div class="accordion-container">
+                {% for category in category_data %}
+                <div class="accordion-item" id="cat-block-{{ loop.index }}">
+                    
+                    <button class="accordion-header" onclick="toggleAccordion('{{ loop.index }}')">
+                        <span class="header-text">
+                            <i class="fa-solid fa-folder icon-folder"></i> {{ category.title }}
+                        </span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+                    
+                    <div class="accordion-content" id="content-{{ loop.index }}">
+                        <ul class="video-links-list">
+                            {% for video in category.videos %}
+                            <li class="video-item" id="vid-item-{{ video.youtube_id }}" onclick="playTargetVideo('{{ video.youtube_id }}', '{{ video.title|e }}', this)">
+                                <i class="fa-regular fa-circle-play play-status-icon"></i>
+                                <span class="video-title-text">{{ video.title }}</span>
+                            </li>
+                            {% else %}
+                            <li class="empty-video-log">
+                                <i class="fa-solid fa-video-slash"></i> इस श्रेणी में कोई वीडियो उपलब्ध नहीं है।
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                </div>
+                {% endfor %}
+            </div>
+        </aside>
+
+        <main class="theatre-panel">
+            <div class="player-card">
+                <div class="player-header">
+                    <span class="live-tag"><i class="fa-solid fa-circle-play"></i> NOW STREAMING</span>
+                    <h2 id="activeVideoTitle">कृपया प्रशिक्षण शुरू करने के लिए बाईं ओर से कोई भी वीडियो चुनें</h2>
+                </div>
+                
+                <div class="video-ratio-box">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="placeholder-content">
+                            <i class="fa-solid fa-clapperboard fluid-icon"></i>
+                            <h3>Select a Module to Start Training</h3>
+                            <p>बाईं ओर दी गई श्रेणियों पर क्लिक करें और सीखने के लिए किसी भी वीडियो को प्ले करें।</p>
+                        </div>
+                    </div>
+                    <iframe id="mainPortalPlayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<script>
+// Accordion Expand/Collapse Controller
+function toggleAccordion(indexId) {
+    const activeHeader = document.querySelector(`#cat-block-${indexId} .accordion-header`);
+    const activeContent = document.getElementById(`content-${indexId}`);
+    
+    // Close other opened panels for better focus management
+    document.querySelectorAll('.accordion-content').forEach(content => {
+        if (content.id !== `content-${indexId}`) {
+            content.classList.remove('open');
+            content.previousElementSibling.classList.remove('active');
+        }
+    });
+
+    // Toggle current selection panel
+    activeContent.classList.toggle('open');
+    activeHeader.classList.toggle('active');
+}
+
+// In-line Instant Video Ingestion System
+function playTargetVideo(youtubeId, videoTitle, elementRef) {
+    const player = document.getElementById('mainPortalPlayer');
+    const titleHeader = document.getElementById('activeVideoTitle');
+    const placeholder = document.getElementById('videoPlaceholder');
+    
+    // Reset previous selection highlights
+    document.querySelectorAll('.video-item').forEach(item => item.classList.remove('selected-playing'));
+    
+    // Apply dynamic active state skin to selected element
+    elementRef.classList.add('selected-playing');
+    
+    // Fade out placeholder screen layer
+    placeholder.style.display = 'none';
+    
+    // Load source link into iframe with autoplay enabled
+    titleHeader.innerText = videoTitle;
+    player.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+    
+    // Mobile responsive auto scroll view focus behavior
+    if (window.innerWidth < 992) {
+        document.querySelector('.theatre-panel').scrollIntoView({ behavior: 'smooth' });
+    }
+}
+</script>
+
+</body>
+</html>

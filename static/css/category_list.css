@@ -1,0 +1,260 @@
+/* ==========================================================================
+   PREMIUM CATEGORIES DATA TABLE STYLESHEET
+   ========================================================================== */
+
+/* Global Config */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #0f172a; /* Same sleek dark theme */
+    color: #f8fafc;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 1. Header Configurations */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 25px;
+}
+
+.nav-back-btn {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    transition: color 0.2s ease;
+}
+
+.nav-back-btn:hover {
+    color: #3b82f6;
+}
+
+.header-left h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left h2 i {
+    color: #3b82f6;
+}
+
+.header-left p {
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Action Trigger Button */
+.btn-create-new {
+    text-decoration: none;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-create-new:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+/* 2. Main Table Grid Container */
+.table-card {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.modern-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* Table Header Matrix */
+.modern-data-table th {
+    background: rgba(15, 23, 42, 0.4);
+    padding: 18px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #334155;
+}
+
+/* Table Body Matrix */
+.modern-data-table td {
+    padding: 18px 24px;
+    font-size: 15px;
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background 0.2s ease;
+}
+
+.modern-data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+/* Column Tweaks */
+.td-index {
+    width: 100px;
+}
+
+.index-badge {
+    background: rgba(15, 23, 42, 0.6);
+    color: #94a3b8;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid #334155;
+}
+
+.title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.shadow-icon {
+    color: #64748b;
+    font-size: 16px;
+}
+
+.main-text {
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+/* 3. Sleek Action Buttons Layout */
+.action-flex-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.action-link {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+/* Update Control button color states */
+.update-link {
+    background: rgba(234, 179, 8, 0.1);
+    color: #eab308;
+    border: 1px solid rgba(234, 179, 8, 0.15);
+}
+
+.update-link:hover {
+    background: #eab308;
+    color: #0f172a;
+    box-shadow: 0 4px 12px rgba(234, 179, 8, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Delete Control button color states */
+.delete-link {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.delete-link:hover {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Global Helpers */
+.text-center {
+    text-align: center;
+}
+
+/* Empty State Styling */
+.table-empty-state {
+    padding: 60px !important;
+    text-align: center;
+}
+
+.empty-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+}
+
+.empty-box i {
+    font-size: 36px;
+}
+
+/* Subtle Load Animation */
+.animate-fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .btn-create-new {
+        width: 100%;
+        justify-content: center;
+    }
+}

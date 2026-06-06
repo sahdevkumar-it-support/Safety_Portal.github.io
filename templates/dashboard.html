@@ -1,169 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
-    <title>User Dashboard</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static', filename='css/style.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Portal - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
-
 <body>
 
-<!-- ================= TOP HEADER ================= -->
-
-<div class="user-header">
-
-    <div class="logo-section">
-
-        <h1>UTKAL COAL MINE</h1>
-
-        <p>Safety Training Portal</p>
-
-    </div>
-
-    <div class="user-info">
-
-        <span>
-
-            Welcome,
-            {{ username }}
-
-        </span>
-
-        <a href="/logout"
-        class="logout-btn">
-
-            Logout
-
-        </a>
-
-    </div>
-
-</div>
-
-<!-- ================= BANNER ================= -->
-
-<div class="banner-section">
-
-    <div class="banner-overlay"></div>
-
-    <div class="banner-content">
-
-        <h1>सुरक्षा प्रशिक्षण वीडियो</h1>
-
-        <p>
-            SAFETY TRAINING VIDEOS
-        </p>
-
-    </div>
-
-</div>
-
-<!-- ================= SEARCH BAR ================= -->
-
-<div class="video-search-section">
-
-    <input type="text"
-    id="videoSearch"
-    placeholder="Search Safety Videos..."
-    onkeyup="searchVideos()">
-
-</div>
-
-<!-- ================= VIDEO SECTION ================= -->
-
-<div class="video-main-container">
-
-    {% for video in videos %}
-
-    <div class="coal-video-card">
-
-        <!-- TITLE -->
-
-        <div class="video-title">
-
-            {{ video.title }}
-
+<div class="dashboard-wrapper">
+    
+    <header class="main-header">
+        <div class="header-brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2>Safety Video Portal</h2>
         </div>
-
-        <!-- CATEGORY -->
-
-        <div class="video-category">
-
-            {{ video.category }}
-
+        <div class="header-actions">
+            <span class="user-welcome">Welcome, <strong>Admin</strong></span>
+            <a href="/logout" class="btn-logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
         </div>
+    </header>
 
-        <!-- VIDEO -->
+    <main class="main-content">
+        
+        <section class="stats-section">
+            <div class="stat-card category-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ total_categories }}</h3>
+                    <p>Total Categories</p>
+                </div>
+                <div class="card-glow"></div>
+            </div>
 
-        <div class="video-frame">
+            <div class="stat-card video-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-video"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ total_videos }}</h3>
+                    <p>Total Videos</p>
+                </div>
+                <div class="card-glow"></div>
+            </div>
 
-            <iframe
-            src="{{ video.youtube_link }}"
-            title="Safety Video"
-            allowfullscreen>
+            <div class="stat-card user-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ total_users }}</h3>
+                    <p>Total Users</p>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+        </section>
 
-            </iframe>
+        <section class="menu-section">
+            <h3 class="section-title"><i class="fa-solid fa-star"></i> Quick Management Actions</h3>
+            <div class="action-grid">
+                
+                <a href="/add_category" class="menu-item color-1">
+                    <div class="menu-icon"><i class="fa-solid fa-folder-plus"></i></div>
+                    <span>Add Category</span>
+                </a>
 
-        </div>
+                <a href="/categories" class="menu-item color-2">
+                    <div class="menu-icon"><i class="fa-solid fa-folder-tree"></i></div>
+                    <span>View Categories</span>
+                </a>
 
-    </div>
+                <a href="/add_video" class="menu-item color-3">
+                    <div class="menu-icon"><i class="fa-solid fa-square-plus"></i></div>
+                    <span>Add Video</span>
+                </a>
 
-    {% endfor %}
+                <a href="/videos" class="menu-item color-4">
+                    <div class="menu-icon"><i class="fa-solid fa-sliders"></i></div>
+                    <span>Video Management</span>
+                </a>
 
+                <a href="/home" class="menu-item color-5">
+                    <div class="menu-icon"><i class="fa-solid fa-circle-play"></i></div>
+                    <span>Watch Safety Videos</span>
+                </a>
+
+                <a href="/users" class="menu-item color-6">
+                    <div class="menu-icon"><i class="fa-solid fa-user-gear"></i></div>
+                    <span>Manage Users</span>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
 </div>
-
-<!-- ================= FOOTER ================= -->
-
-<div class="footer">
-
-    <p>
-
-        © 2026 UTKAL COAL MINE
-        | Safety Department Portal
-
-    </p>
-
-</div>
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-    function searchVideos(){
-
-        let input = document
-        .getElementById("videoSearch")
-        .value
-        .toLowerCase();
-
-        let cards =
-        document.getElementsByClassName("coal-video-card");
-
-        for(let i=0; i<cards.length; i++){
-
-            let text =
-            cards[i].innerText.toLowerCase();
-
-            if(text.includes(input)){
-
-                cards[i].style.display = "";
-
-            }else{
-
-                cards[i].style.display = "none";
-            }
-        }
-    }
-
-</script>
 
 </body>
 </html>

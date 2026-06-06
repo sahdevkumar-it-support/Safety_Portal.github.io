@@ -1,0 +1,204 @@
+/* ==========================================================================
+   EDIT / UPDATE CATEGORY MODAL STYLESHEET
+   ========================================================================== */
+
+/* Core Configuration */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #0f172a; /* Consistent dark corporate theme */
+    color: #f8fafc;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Outer Wrapper */
+.edit-wrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Centered Glassmorphic Panel */
+.edit-container {
+    width: 100%;
+    max-width: 460px;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+/* Header UI Elements */
+.edit-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.edit-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #eab308, #ca8a04); /* Premium Yellow/Gold Accent for Edit */
+    color: #0f172a;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    margin: 0 auto 16px auto;
+    box-shadow: 0 8px 20px rgba(234, 179, 8, 0.2);
+}
+
+.edit-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+
+.edit-header p {
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* Form Fields Core */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+/* Input Wrapper Matrix */
+.input-block {
+    position: relative;
+    width: 100%;
+}
+
+.field-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 16px;
+}
+
+.input-block input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 2px solid #334155;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.input-block input:focus {
+    border-color: #eab308; /* Input glow changes to gold on focus */
+    box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15);
+    background: rgba(15, 23, 42, 0.9);
+}
+
+/* Action Trigger Row */
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Cancel Action Style */
+.btn-cancel {
+    flex: 1;
+    text-decoration: none;
+    background: #334155;
+    color: #94a3b8;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    background: #475569;
+    color: #f1f5f9;
+}
+
+/* Update Submit Action Style */
+.btn-update {
+    flex: 2;
+    background: linear-gradient(135deg, #eab308, #ca8a04);
+    color: #0f172a;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(234, 179, 8, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-update:hover {
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(234, 179, 8, 0.35);
+}
+
+.btn-update:active {
+    transform: translateY(0);
+}
+
+/* Smooth Slide Animation */
+.animate-slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

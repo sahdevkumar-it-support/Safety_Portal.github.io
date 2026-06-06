@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Portal - Categories List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category_list.css') }}">
+</head>
+<body>
+
+<div class="list-container">
+    
+    <header class="list-header">
+        <div class="header-left">
+            <a href="/dashboard" class="nav-back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Dashboard
+            </a>
+            <h2><i class="fa-solid fa-folder-tree"></i> Video Classifications</h2>
+            <p>Sari categories ko yahan se monitor, update ya delete kiya ja sakta hai.</p>
+        </div>
+        
+        <div class="header-right">
+            <a href="/add_category" class="btn-create-new">
+                <i class="fa-solid fa-plus"></i> Add New Category
+            </a>
+        </div>
+    </header>
+
+    <div class="table-card animate-fade-in">
+        <div class="table-responsive">
+            <table class="modern-data-table">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 100px;">S.No.</th>
+                        <th>Category Title</th>
+                        <th class="text-center" style="width: 280px;">Actions Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td class="text-center td-index">
+                            <span class="index-badge">{{ loop.index }}</span>
+                        </td>
+                        
+                        <td class="td-title">
+                            <div class="title-wrapper">
+                                <i class="fa-regular fa-folder shadow-icon"></i>
+                                <span class="main-text">{{ category.title }}</span>
+                            </div>
+                        </td>
+                        
+                        <td class="text-center td-actions">
+                            <div class="action-flex-group">
+                                <a href="/edit_category/{{ category._id }}" class="action-link update-link">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                    <span>Update</span>
+                                </a>
+                                
+                                <a href="/delete_category/{{ category._id }}" 
+                                   class="action-link delete-link" 
+                                   onclick="return confirm('⚠️ WARNING: Is category ko delete karne se iske andar ke saare videos bhi delete ho jayenge! Kya aap aage badhna chahte hain?');">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                    <span>Delete</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="table-empty-state">
+                            <div class="empty-box">
+                                <i class="fa-solid fa-box-open"></i>
+                                <p>Koi category nahi mili! Kripya naya add karein.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

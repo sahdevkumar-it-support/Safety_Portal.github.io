@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Employee Tracker</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>
+
+        Employee IME & VTC Tracker
+
+    </h2>
+
+    <a href="/admin_dashboard"
+    class="logout-btn">
+
+        Back
+
+    </a>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-container">
+
+    <input type="text"
+    id="searchInput"
+    placeholder="Search Employee..."
+    onkeyup="searchEmployee()">
+
+</div>
+
+<!-- TABLE -->
+
+<div class="employee-table-container">
+
+<table id="employeeTable">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>EMP CODE</th>
+<th>NAME</th>
+<th>DEPARTMENT</th>
+<th>IME STATUS</th>
+<th>VTC CERTIFICATE</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for emp in employees %}
+
+<tr onclick="fillForm(this)"
+
+data-id="{{ emp.id }}"
+data-name="{{ emp.name }}"
+data-ime_date="{{ emp.ime_date }}"
+data-ime_valid_upto="{{ emp.ime_valid_upto }}"
+data-ime_status="{{ emp.ime_status }}"
+data-vtc_start_date="{{ emp.vtc_start_date }}"
+data-vtc_end_date="{{ emp.vtc_end_date }}"
+data-vtc_certificate_no="{{ emp.vtc_certificate_no }}"
+data-vtc_grade="{{ emp.vtc_grade }}"
+data-vtc_training_type="{{ emp.vtc_training_type }}"
+data-vtc_valid_upto="{{ emp.vtc_valid_upto }}">
+
+<td>{{ emp.id }}</td>
+<td>{{ emp.emp_code }}</td>
+<td>{{ emp.name }}</td>
+<td>{{ emp.department }}</td>
+<td>{{ emp.ime_status }}</td>
+<td>{{ emp.vtc_certificate_no }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- FORM -->
+
+<div class="employee-form-container">
+
+<h1>
+
+IME & VTC Details
+
+</h1>
+
+<form action="/update_tracker"
+method="POST">
+
+<input type="hidden"
+name="id"
+id="id">
+
+<!-- IME -->
+
+<h2 class="section-title">
+
+IME DETAILS
+
+</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>
+
+IME Date
+
+</label>
+
+<input type="date"
+name="ime_date"
+id="ime_date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+IME Valid Upto
+
+</label>
+
+<input type="date"
+name="ime_valid_upto"
+id="ime_valid_upto">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+IME Status
+
+</label>
+
+<select name="ime_status"
+id="ime_status">
+
+<option value="FIT">FIT</option>
+
+<option value="UNFIT">UNFIT</option>
+
+</select>
+
+</div>
+
+</div>
+
+<!-- VTC -->
+
+<h2 class="section-title">
+
+VTC DETAILS
+
+</h2>
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>
+
+VTC Start Date
+
+</label>
+
+<input type="date"
+name="vtc_start_date"
+id="vtc_start_date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+VTC End Date
+
+</label>
+
+<input type="date"
+name="vtc_end_date"
+id="vtc_end_date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Certificate Number
+
+</label>
+
+<input type="text"
+name="vtc_certificate_no"
+id="vtc_certificate_no">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Grade
+
+</label>
+
+<select name="vtc_grade"
+id="vtc_grade">
+
+<option value="A">A</option>
+<option value="B">B</option>
+<option value="C">C</option>
+<option value="PASS">PASS</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Training Type
+
+</label>
+
+<select name="vtc_training_type"
+id="vtc_training_type">
+
+<option value="Initial VTC">
+
+Initial VTC
+
+</option>
+
+<option value="Refresher VTC">
+
+Refresher VTC
+
+</option>
+
+<option value="Hazard Training">
+
+Hazard Training
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Valid Upto
+
+</label>
+
+<input type="date"
+name="vtc_valid_upto"
+id="vtc_valid_upto">
+
+</div>
+
+</div>
+
+<button type="submit"
+class="add-btn">
+
+Update Tracker
+
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+function fillForm(row)
+{
+
+document.getElementById("id").value =
+row.dataset.id;
+
+document.getElementById("ime_date").value =
+row.dataset.ime_date;
+
+document.getElementById("ime_valid_upto").value =
+row.dataset.ime_valid_upto;
+
+document.getElementById("ime_status").value =
+row.dataset.ime_status;
+
+document.getElementById("vtc_start_date").value =
+row.dataset.vtc_start_date;
+
+document.getElementById("vtc_end_date").value =
+row.dataset.vtc_end_date;
+
+document.getElementById("vtc_certificate_no").value =
+row.dataset.vtc_certificate_no;
+
+document.getElementById("vtc_grade").value =
+row.dataset.vtc_grade;
+
+document.getElementById("vtc_training_type").value =
+row.dataset.vtc_training_type;
+
+document.getElementById("vtc_valid_upto").value =
+row.dataset.vtc_valid_upto;
+
+}
+
+function searchEmployee()
+{
+
+let input =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#employeeTable tbody tr");
+
+rows.forEach(row => {
+
+let name =
+row.cells[2].innerText.toLowerCase();
+
+let code =
+row.cells[1].innerText.toLowerCase();
+
+if (
+name.includes(input)
+||
+code.includes(input)
+)
+{
+
+row.style.display = "";
+
+}
+else
+{
+
+row.style.display = "none";
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>

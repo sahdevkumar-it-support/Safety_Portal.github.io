@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Portal - Video Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/video_management.css') }}">
+</head>
+<body>
+
+<div class="page-container">
+    
+    <header class="management-header">
+        <div class="header-left">
+            <a href="/dashboard" class="btn-dashboard">
+                <i class="fa-solid fa-arrow-left"></i> Dashboard
+            </a>
+            <h2><i class="fa-solid fa-clapperboard"></i> Video Control Station</h2>
+            <p>Upload new safety compliance training modules and handle cascade records.</p>
+        </div>
+        <div class="header-right">
+            <a href="/logout" class="btn-logout">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </header>
+
+    <div class="workspace-grid">
+        
+        <div class="panel form-panel animate-slide-up">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-circle-plus"></i> Upload Safety Video</h3>
+                <p>Fill out parameters to extract and ingest metadata.</p>
+            </div>
+
+            <form action="/add_video" method="POST" class="modern-form">
+                
+                <div class="form-group">
+                    <label for="title"><i class="fa-solid fa-heading"></i> Video Module Title</label>
+                    <div class="input-block">
+                        <input type="text" id="title" name="title" placeholder="जैसे: ऊंचाई पर काम करते समय सुरक्षा" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="youtube_url"><i class="fa-brands fa-youtube"></i> YouTube URL / Link</label>
+                    <div class="input-block">
+                        <input type="text" id="youtube_url" name="youtube_url" placeholder="Paste standard link or short URL" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category_id"><i class="fa-solid fa-folder-tree"></i> Operational Category</label>
+                    <div class="select-block">
+                        <select id="category_id" name="category_id" required>
+                            <option value="" disabled selected>Choose target layer...</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat._id }}">{{ cat.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit-video">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Ingest Video
+                </button>
+
+            </form>
+        </div>
+
+        <div class="panel list-panel animate-slide-up">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-table-list"></i> Managed Safety Logs</h3>
+                <p>Click on any video thumbnail to instantly preview the streaming block.</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="premium-data-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 70px;">S.No.</th>
+                            <th>Media Asset (Click to Play)</th>
+                            <th>Classification Category</th>
+                            <th class="text-center" style="width: 140px;">Action Matrix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for video in videos %}
+                        <tr>
+                            <td class="text-center col-serial">
+                                <span class="serial-tag">{{ loop.index }}</span>
+                            </td>
+                            
+                            <td class="col-asset">
+                                <div class="asset-meta-box" onclick="openPlayer('{{ video.youtube_id }}', '{{ video.title|e }}')">
+                                    <div class="yt-thumbnail">
+                                        <img src="https://img.youtube.com/vi/{{ video.youtube_id }}/mqdefault.jpg" alt="Preview">
+                                        <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+                                    </div>
+                                    <div class="asset-details">
+                                        <span class="asset-title" title="{{ video.title }}">{{ video.title }}</span>
+                                        <span class="asset-token"><i class="fa-brands fa-youtube"></i> Preview Content</span>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td class="col-category">
+                                <span class="category-badge">
+                                    <i class="fa-regular fa-folder-open"></i> {{ video.category_name }}
+                                </span>
+                            </td>
+                            
+                            <td class="text-center col-action">
+                                <a href="/delete_video/{{ video._id }}" 
+                                   class="btn-action-delete" 
+                                   onclick="event.stopPropagation(); return confirm('⚠️ CRITICAL WARNING:\n\nKya aap pakka is safety video module ko records se hamesha ke liye delete karna chahte hain?');">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="empty-state-row">
+                                <div class="empty-vector">
+                                    <i class="fa-solid fa-video-slash"></i>
+                                    <p>Streaming base is empty. Left form use karke pehla video add karein!</p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="video-modal-overlay" id="videoModal" onclick="closePlayer()">
+    <div class="modal-content-card" onclick="event.stopPropagation()">
+        <div class="modal-player-header">
+            <h4 id="modalVideoTitle">Safety Video Preview</h4>
+            <button class="close-modal-btn" onclick="closePlayer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="video-ratio-wrapper">
+            <iframe id="videoPlayerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+function openPlayer(youtubeId, videoTitle) {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoPlayerFrame');
+    const titleElement = document.getElementById('modalVideoTitle');
+    
+    // Set dynamic dynamic components
+    titleElement.innerText = videoTitle;
+    iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+    
+    // Display popup with slick CSS fade transition
+    modal.classList.add('active');
+}
+
+function closePlayer() {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoPlayerFrame');
+    
+    // Hide popup
+    modal.classList.remove('active');
+    
+    // Destruct source to immediately kill background audio track stream
+    iframe.src = "";
+}
+
+// Escape key press handles exit
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") {
+        closePlayer();
+    }
+});
+</script>
+
+</body>
+</html>

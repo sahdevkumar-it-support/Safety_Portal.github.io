@@ -1,0 +1,412 @@
+/* ================= GLOBAL RESET & THEME ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Mobile click flash remove karne ke liye */
+}
+
+body.public-portal-body {
+    background-color: #0b131f; /* Dark Premium Theme */
+    color: #ffffff;
+    line-height: 1.6;
+    padding-bottom: 60px; /* Footer ke liye space */
+}
+
+/* ================= PREMIUM NAVBAR ================= */
+.main-navbar {
+    background-color: #15263b;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column; /* Mobile me upar-neeche dhalne ke liye */
+    gap: 12px;
+    border-bottom: 3px solid #fca311;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.industry-icon {
+    font-size: 28px;
+    color: #fca311;
+}
+
+.navbar-brand h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.navbar-brand p {
+    font-size: 11px;
+    color: #a0aec0;
+}
+
+/* Translator and Badge Row */
+.navbar-status {
+    display: flex;
+    justify-content: space-between; /* Mobile me select left aur status right jayega */
+    align-items: center;
+    width: 100%;
+}
+
+.status-badge {
+    background: #1e3a5f;
+    color: #38bdf8;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+/* ================= HERO SECTION ================= */
+.portal-hero {
+    background: linear-gradient(rgba(11, 19, 31, 0.8), rgba(11, 19, 31, 0.95)), 
+                url('https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=600') no-repeat center center;
+    background-size: cover;
+    padding: 30px 15px;
+    text-align: center;
+    border-bottom: 1px solid #1e293b;
+}
+
+.hero-content h1 {
+    font-size: 20px;
+    color: #fca311;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.hero-content p {
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+/* ================= SEARCH BAR ================= */
+.search-container {
+    padding: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-box-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar-icon {
+    position: absolute;
+    left: 15px;
+    color: #a0aec0;
+    font-size: 16px;
+}
+
+.search-box-wrapper input {
+    width: 100%;
+    padding: 14px 14px 14px 45px;
+    background-color: #15263b;
+    border: 2px solid #1e293b;
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-box-wrapper input:focus {
+    border-color: #fca311;
+    background-color: #1a304a;
+    box-shadow: 0 0 10px rgba(252, 163, 17, 0.2);
+}
+
+/* ================= PORTAL MAIN CONTAINER ================= */
+.portal-container {
+    padding: 10px 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Accordion Safety Card */
+.safety-card {
+    background-color: #15263b;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.safety-card-header {
+    background: linear-gradient(135deg, #1a304a, #15263b);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.header-left-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    padding-right: 10px;
+}
+
+.shield-icon {
+    color: #fca311;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.safety-card-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.badge-count {
+    background-color: rgba(252, 163, 17, 0.2);
+    color: #fca311;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    align-self: flex-start;
+    margin-top: 2px;
+}
+
+.panel-arrow-icon {
+    color: #a0aec0;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+/* Video List Body */
+.safety-card-body {
+    background-color: #0e1a29;
+    border-top: 1px solid #1e293b;
+}
+
+.video-item-list {
+    list-style: none;
+}
+
+.video-list-row {
+    border-bottom: 1px solid #15263b;
+}
+
+.video-list-row:last-child {
+    border-bottom: none;
+}
+
+.video-list-row a {
+    display: flex;
+    flex-direction: column; /* Mobile me Title upar aur button neeche */
+    gap: 10px;
+    padding: 16px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background 0.2s ease;
+}
+
+.video-list-row a:active {
+    background-color: #15263b; /* Mobile Touch Feedback */
+}
+
+.video-row-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.main-play-icon {
+    color: #38bdf8;
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.video-item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #e2e8f0;
+    line-height: 1.4;
+}
+
+.action-play-badge {
+    background-color: #22c55e;
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    align-self: fill; /* Poori width le lega responsive touch ke liye */
+    box-shadow: 0 2px 5px rgba(34, 197, 94, 0.2);
+}
+
+.empty-video-row {
+    padding: 20px;
+    text-align: center;
+    color: #a0aec0;
+    font-size: 13px;
+}
+
+/* No Data Card Error */
+.no-data-card {
+    background-color: #15263b;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px dashed #ef4444;
+}
+.database-error-icon {
+    font-size: 40px;
+    color: #ef4444;
+    margin-bottom: 10px;
+}
+
+/* ================= DYNAMIC VIDEO POPUP MODAL ================= */
+.video-overlay-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.modal-window {
+    background-color: #15263b;
+    width: 100%;
+    max-width: 550px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border: 1px solid #1e293b;
+}
+
+.modal-window-header {
+    background-color: #1a304a;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e293b;
+}
+
+.modal-window-header h3 {
+    font-size: 14px;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+}
+
+.dismiss-modal-btn {
+    font-size: 28px;
+    color: #a0aec0;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.dismiss-modal-btn:hover {
+    color: #ef4444;
+}
+
+.modal-window-body {
+    padding: 0; /* No padding for full video view */
+}
+
+.video-ratio-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    background-color: #000;
+}
+
+.video-ratio-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ================= FOOTER ================= */
+.portal-footer {
+    background-color: #0b131f;
+    border-top: 1px solid #15263b;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    margin-top: 30px;
+}
+
+.portal-footer p {
+    font-size: 11px;
+    color: #718096;
+}
+
+
+/* ================= BIGGER SCREENS (DESKTOP) OPTIMIZATION ================= */
+@media (min-width: 576px) {
+    .main-navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+    }
+    .navbar-status {
+        width: auto;
+    }
+    .navbar-brand h2 {
+        font-size: 22px;
+    }
+    .portal-hero {
+        padding: 50px 20px;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+    }
+    .video-list-row a {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .action-play-badge {
+        align-self: center;
+    }
+}

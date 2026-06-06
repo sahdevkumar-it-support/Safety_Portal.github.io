@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTKAL COAL MINE - Public Safety Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/public_style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* Premium Language Dropdown Widget Styling */
+        .custom-translate-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(252, 163, 17, 0.15);
+            border: 1px solid #fca311;
+            padding: 8px 16px;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .custom-translate-wrapper i {
+            color: #fca311;
+            font-size: 18px;
+        }
+        .custom-translate-wrapper select {
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .custom-translate-wrapper select option {
+            background: #15263b;
+            color: #ffffff;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body class="public-portal-body">
+
+    <div class="main-navbar">
+        <div class="navbar-brand">
+            <i class="fa fa-industry industry-icon"></i>
+            <div>
+                <h2>UTKAL COAL MINE</h2>
+                <p data-trans="subtitle">सुरक्षा जागरूकता प्रशिक्षण पोर्टल</p>
+            </div>
+        </div>
+        
+        <div class="navbar-status" style="display: flex; align-items: center; gap: 15px;">
+            <div class="custom-translate-wrapper">
+                <i class="fa fa-language"></i>
+                <select id="languageSelector" onchange="applyInstantTranslation(this.value)">
+                    <option value="hi">Hindi (हिंदी)</option>
+                    <option value="or">Odia (ଓଡ଼ିଆ)</option>
+                    <option value="en">English</option>
+                    <option value="te">Telugu (తెలుగు)</option>
+                </select>
+            </div>
+
+            <span class="status-badge">
+                <i class="fa fa-globe animate-pulse"></i> <span data-trans="public_mode">पब्लिक एक्सेस मोड</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="portal-hero">
+        <div class="hero-content">
+            <h1 data-trans="hero_title">सुरक्षा सबसे पहले • SAFETY FIRST</h1>
+            <p data-trans="hero_sub">शून्य नुकसान • सुरक्षित खनन • स्मार्ट लर्निंग</p>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-box-wrapper">
+            <i class="fa fa-search search-bar-icon"></i>
+            <input type="text" id="videoSearchInput" placeholder="सुरक्षा प्रशिक्षण वीडियो खोजने के लिए नाम टाइप करें..." onkeyup="filterSafetyVideos()">
+        </div>
+    </div>
+
+    <div class="portal-container">
+    {% if category_data %}
+        {% for category in category_data %}
+        <div class="safety-card">
+            
+            <div class="safety-card-header" onclick="toggleCategoryPanel('panel{{ loop.index }}', this)">
+                <div class="header-left-info">
+                    <i class="fa fa-shield shield-icon"></i>
+                    <h3 class="trans-me">{{ category.title }}</h3>
+                    <span class="badge-count"><span>{{ category.videos|length }}</span> <span data-trans="videos_count">वीडियो</span></span>
+                </div>
+                <i class="fa fa-chevron-down panel-arrow-icon"></i>
+            </div>
+
+            <div class="safety-card-body" id="panel{{ loop.index }}" style="display: block;">
+                <ul class="video-item-list">
+                {% if category.videos %}
+                    {% for video in category.videos %}
+                    <li class="video-list-row">
+                        <a href="javascript:void(0);" onclick="launchVideoPlayer('{{ video.title }}', '{{ video.youtube_id }}')">
+                            <div class="video-row-left">
+                                <i class="fa fa-play-circle main-play-icon"></i>
+                                <span class="video-item-title trans-me">{{ video.title }}</span>
+                            </div>
+                            <span class="action-play-badge"><span data-trans="play_btn">वीडियो देखें</span> <i class="fa fa-external-link"></i></span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="empty-video-row" data-trans="no_video">⚠️ इस श्रेणी में अभी कोई सुरक्षा वीडियो उपलब्ध नहीं है।</li>
+                {% endif %}
+                </ul>
+            </div>
+            
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-data-card">
+            <i class="fa fa-database database-error-icon"></i>
+            <h3 data-trans="db_empty">डेटाबेस खाली है!</h3>
+            <p data-trans="db_empty_sub">कृपया पहले एडमिन डैशबोर्ड में जाकर श्रेणियों और वीडियो को जोड़ें.</p>
+        </div>
+    {% endif %}
+    </div>
+
+    <div id="videoPopupModal" class="video-overlay-modal">
+        <div class="modal-window">
+            <div class="modal-window-header">
+                <h3 id="currentModalTitle" data-trans="loading_text">सुरक्षा वीडियो लोड हो रहा है...</h3>
+                <span class="dismiss-modal-btn" onclick="shutdownVideoPlayer()">&times;</span>
+            </div>
+            <div class="modal-window-body">
+                <div class="video-ratio-wrapper">
+                    <iframe id="modalVideoPlayerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portal-footer">
+        <p data-trans="footer_text">© 2026 उत्कल कोल माइन | कॉर्पोरेट सुरक्षा एवं स्वास्थ्य विभाग</p>
+    </div>
+
+    <script>
+    // 1. Static Layout Dictionary for Fixed Texts
+    const languageDictionary = {
+        "hi": {
+            "subtitle": "सुरक्षा जागरूकता प्रशिक्षण पोर्टल",
+            "public_mode": "पब्लिक एक्सेस मोड",
+            "hero_title": "सुरक्षा सबसे पहले • SAFETY FIRST",
+            "hero_sub": "शून्य नुकसान • सुरक्षित खनन • स्मार्ट लर्निंग",
+            "videos_count": "वीडियो",
+            "play_btn": "वीडियो देखें",
+            "no_video": "⚠️ इस श्रेणी में अभी कोई सुरक्षा वीडियो उपलब्ध नहीं है।",
+            "db_empty": "डेटाबेस खाली है!",
+            "db_empty_sub": "कृपया पहले एडमिन डैशबोर्ड में जाकर श्रेणियों और वीडियो को जोड़ें.",
+            "loading_text": "सुरक्षा वीडियो लोड हो रहा है...",
+            "footer_text": "© 2026 उत्कल कोल माइन | कॉर्पोरेट सुरक्षा एवं स्वास्थ्य विभाग"
+        },
+        "or": {
+            "subtitle": "ସୁରକ୍ଷା ସଚେତନତା ପ୍ରଶିକ୍ଷଣ ପୋର୍ଟାଲ୍",
+            "public_mode": "ପବ୍ଲିକ୍ ଆକ୍ସେସ୍ ମୋଡ୍",
+            "hero_title": "ସୁରକ୍ଷା ସର୍ବପ୍ରଥମେ • SAFETY FIRST",
+            "hero_sub": "ଶୂନ୍ୟ କ୍ଷତି • ସୁରକ୍ଷିତ ଖନନ • ସ୍ମାର୍ଟ ଲର୍ଣ୍ଣିଂ",
+            "videos_count": "ଭିଡିଓ",
+            "play_btn": "ଭିଡିଓ ଦେଖନ୍ତୁ",
+            "no_video": "⚠️ ଏହି ଶ୍ରେଣୀରେ ବର୍ତ୍ତମାନ କୌଣସି ସୁରକ୍ଷା ଭିଡିଓ ଉପଲବ୍ଧ ନାହିଁ |",
+            "db_empty": "ଡାଟାବେସ୍ ଖାଲି ଅଛି!",
+            "db_empty_sub": "ଦୟାକରି ପ୍ରଥମେ ଆଡମିନ୍ ଡ୍ୟାସବୋର୍ଡକୁ ଯାଇ ଶ୍ରେଣୀ ଏବଂ ଭିଡିଓ ଯୋଡନ୍ତୁ |",
+            "loading_text": "ସୁରକ୍ଷା ଭିଡିଓ ଲୋଡ୍ ହେଉଛି...",
+            "footer_text": "© 2026 ଉତ୍କଳ କୋଇଲା ଖଣି | କର୍ପୋରେଟ୍ ସୁରକ୍ଷା ଏବଂ ସ୍ୱାସ୍ଥ୍ୟ ବିଭାଗ"
+        },
+        "en": {
+            "subtitle": "Safety Awareness Training Portal",
+            "public_mode": "Public Access Mode",
+            "hero_title": "SAFETY FIRST • SURAKSHA SABSE PEHLE",
+            "hero_sub": "Zero Harm • Safe Mining • Smart Learning",
+            "videos_count": "Videos",
+            "play_btn": "Watch Video",
+            "no_video": "⚠️ No safety videos available in this category yet.",
+            "db_empty": "Database Empty!",
+            "db_empty_sub": "Please add categories and videos from the admin panel first.",
+            "loading_text": "Loading Safety Video...",
+            "footer_text": "© 2026 Utkal Coal Mine | Corporate Safety & Health Department"
+        },
+        "te": {
+            "subtitle": "భద్రతా అవగాహన శిక్షణ పోర్టల్",
+            "public_mode": "పబ్లిక్ యాక్సెస్ మోడ్",
+            "hero_title": "భద్రత అందరికంటే ముందు • SAFETY FIRST",
+            "hero_sub": "సున్నా నష్టం • సురక్షితమైన మైనింగ్ • స్మార్ట్ లెర్నింగ్",
+            "videos_count": "వీడియోలు",
+            "play_btn": "వీడియో చూడండి",
+            "no_video": "⚠️ ఈ వర్గంలో ఇంకా భద్రతా వీడియోలు అందుబాటులో లేవు.",
+            "db_empty": "డేటాబేస్ ఖాళీగా ఉంది!",
+            "db_empty_sub": "దయచేసి మొదట అడ్మిన్ ప్యానెల్ నుండి వర్గాలు మరియు వీడియోలను జోడించండి.",
+            "loading_text": "భద్రతా వీడియో లోడ్ అవుతోంది...",
+            "footer_text": "© 2026 ఉత్కల్ కోల్ మైన్ | కార్పొరేట్ భద్రత & ఆరోగ్య శాఖ"
+        }
+    };
+
+    // 2. Client-Side Dynamic Google Free API Handler for DB Content (Async Execution)
+    async function translateDynamicText(textElement, targetLang) {
+        let currentText = textElement.getAttribute("data-orig-text") || textElement.innerText;
+        
+        // Element me original text backup save kar lete hain taaki switch karne par text kharab na ho
+        if (!textElement.getAttribute("data-orig-text")) {
+            textElement.setAttribute("data-orig-text", currentText);
+        }
+
+        if (targetLang === 'hi') {
+            textElement.innerText = currentText;
+            return;
+        }
+
+        try {
+            // Free Cloud Translation Endpoint without API Key restriction
+            let response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=hi&tl=${targetLang}&dt=t&q=${encodeURIComponent(currentText)}`);
+            let data = await response.json();
+            if(data && data[0] && data[0][0]) {
+                textElement.innerText = data[0][0][0];
+            }
+        } catch (error) {
+            console.log("Translation delay network drop, keeping baseline text.", error);
+        }
+    }
+
+    // 3. Main Master Function called on Dropdown Select
+    function applyInstantTranslation(lang) {
+        // Part A: Translate Static Layout
+        let staticElements = document.querySelectorAll("[data-trans]");
+        staticElements.forEach(el => {
+            let key = el.getAttribute("data-trans");
+            if(languageDictionary[lang] && languageDictionary[lang][key]) {
+                el.innerText = languageDictionary[lang][key];
+            }
+        });
+
+        // Part B: Translate Dynamic MongoDB Database Content (Targeting '.trans-me')
+        let dynamicElements = document.querySelectorAll(".trans-me");
+        dynamicElements.forEach(el => {
+            translateDynamicText(el, lang);
+        });
+
+        // Search Bar Placeholder Translation Adjustments
+        let searchBar = document.getElementById("videoSearchInput");
+        if(searchBar) {
+            if(lang === 'or') searchBar.placeholder = "ଭିଡିଓ ଖୋଜିବା ପାଇଁ ଏଠାରେ ଟାଇପ୍ କରନ୍ତୁ...";
+            else if(lang === 'en') searchBar.placeholder = "Type here to search safety training videos...";
+            else if(lang === 'te') searchBar.placeholder = "వీడియోలను వెతకడానికి ఇక్కడ టైప్ చేయండి...";
+            else searchBar.placeholder = "सुरक्षा प्रशिक्षण वीडियो खोजने के लिए नाम टाइप करें...";
+        }
+    }
+
+    // --- Core Layout Behaviours UI Logic ---
+    function toggleCategoryPanel(id, headerElement){
+        let panel = document.getElementById(id);
+        let arrow = headerElement.querySelector('.panel-arrow-icon');
+        if(panel.style.display === "none" || panel.style.display === ""){
+            panel.style.display = "block";
+            arrow.style.transform = "rotate(0deg)";
+        } else {
+            panel.style.display = "none";
+            arrow.style.transform = "rotate(-90deg)";
+        }
+    }
+
+    function filterSafetyVideos(){
+        let query = document.getElementById("videoSearchInput").value.toLowerCase();
+        let rows = document.querySelectorAll(".video-list-row");
+        rows.forEach(row => {
+            let titleText = row.querySelector('.video-item-title').innerText.toLowerCase();
+            if(titleText.includes(query)){
+                row.style.display = "";
+                row.closest('.safety-card-body').style.display = "block";
+                row.closest('.safety-card').querySelector('.panel-arrow-icon').style.transform = "rotate(0deg)";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function launchVideoPlayer(title, youtubeId) {
+        document.getElementById('currentModalTitle').innerText = title;
+        let videoEmbedUrl = "https://www.youtube.com/embed/" + youtubeId + "?autoplay=1&rel=0";
+        document.getElementById('modalVideoPlayerFrame').src = videoEmbedUrl;
+        document.getElementById('videoPopupModal').style.display = "flex";
+    }
+
+    function shutdownVideoPlayer() {
+        document.getElementById('videoPopupModal').style.display = "none";
+        document.getElementById('modalVideoPlayerFrame').src = ""; 
+    }
+
+    window.onclick = function(event) {
+        let modalContainer = document.getElementById('videoPopupModal');
+        if (event.target == modalContainer) {
+            shutdownVideoPlayer();
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,183 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
-    <title>User Dashboard</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static', filename='css/style.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTKAL COAL MINE - Safety Videos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<body class="dashboard-clean-body">
 
-<body>
-
-<!-- ================= HEADER ================= -->
-
-<div class="user-header">
-
-    <div class="logo-section">
-
-        <h1>UTKAL COAL MINE</h1>
-
-        <p>
-
-            Safety Training Portal
-
-        </p>
-
-    </div>
-
-    <div class="user-info">
-
-        <span>
-
-            Welcome,
-            {{ username }}
-
-        </span>
-
-        <a href="/logout"
-        class="logout-btn">
-
-            Logout
-
-        </a>
-
-    </div>
-
-</div>
-
-<!-- ================= HERO ================= -->
-
-<div class="user-hero">
-
-    <div class="user-hero-overlay"></div>
-
-    <div class="user-hero-content">
-
-        <h1>
-
-            SAFETY TRAINING VIDEOS
-
-        </h1>
-
-        <p>
-
-            Learn • Prevent • Protect
-
-        </p>
-
-    </div>
-
-</div>
-
-<!-- ================= SEARCH ================= -->
-
-<div class="video-search-section">
-
-    <input type="text"
-    id="videoSearch"
-    placeholder="Search Videos..."
-    onkeyup="searchVideos()">
-
-</div>
-
-<!-- ================= VIDEO GRID ================= -->
-
-<div class="video-main-container">
-
-    {% for video in videos %}
-
-    <div class="coal-video-card">
-
-        <!-- TITLE -->
-
-        <div class="video-title">
-
-            {{ video.title }}
-
+    <div class="clean-navbar">
+        <div class="nav-brand">
+            <h2>UTKAL COAL MINE</h2>
+            <p>Safety Awareness Training Portal</p>
         </div>
-
-        <!-- CATEGORY -->
-
-        <div class="video-category">
-
-            {{ video.category }}
-
+        <div class="nav-user">
+            <span class="user-tag">
+                <i class="fa fa-user-circle"></i> Welcome, {{ session.get('username', 'User') }}
+            </span>
+            <a href="/logout" class="clean-logout-btn">Logout</a>
         </div>
-
-        <!-- VIDEO -->
-
-        <div class="video-frame">
-
-            <iframe
-            src="{{ video.youtube_link }}"
-            title="Safety Video"
-            allowfullscreen>
-
-            </iframe>
-
-        </div>
-
     </div>
 
-    {% endfor %}
+    <div class="clean-hero">
+        <div class="hero-inner">
+            <h1>SAFETY TRAINING VIDEOS</h1>
+            <p>Learn • Prevent • Protect</p>
+        </div>
+    </div>
 
-</div>
+    <div class="clean-search-box">
+        <div class="search-wrapper">
+            <i class="fa fa-search search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Search Safety Videos..." onkeyup="searchVideos()">
+        </div>
+    </div>
 
-<!-- ================= FOOTER ================= -->
+    <div class="clean-container">
+    {% if category_data %}
+        {% for category in category_data %}
+        <div class="category-card">
+            
+            <div class="category-header" onclick="toggleCategory('panel{{ loop.index }}', this)">
+                <div class="header-title">
+                    <i class="fa fa-folder-open folder-icon"></i>
+                    <h3>{{ category.title }}</h3>
+                    <span class="video-count">({{ category.videos|length }} Videos)</span>
+                </div>
+                <i class="fa fa-chevron-down arrow-icon"></i>
+            </div>
 
-<div class="footer">
+            <div class="category-body" id="panel{{ loop.index }}" style="display: block;">
+                <ul class="subvideo-list">
+                {% if category.videos %}
+                    {% for video in category.videos %}
+                    <li class="subvideo-item">
+                        <a href="javascript:void(0);" onclick="openVideoPopup('{{ video.title }}', '{{ video.youtube_id }}')">
+                            <div class="video-link-content">
+                                <i class="fa fa-play-circle play-icon"></i>
+                                <span class="video-title-text">{{ video.title }}</span>
+                            </div>
+                            <span class="watch-badge"><i class="fa fa-television"></i> Click to Play</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="no-video-msg">⚠️ Is category me abhi koi training video available nahi hai.</li>
+                {% endif %}
+                </ul>
+            </div>
+            
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-db-alert">
+            <i class="fa fa-exclamation-triangle"></i>
+            <h3>Database me koi data nahi mila!</h3>
+            <p>Kripya pehle Admin Panel me jaakar Categories aur Videos ko insert karein.</p>
+        </div>
+    {% endif %}
+    </div>
 
-    <p>
+    <div id="videoModal" class="custom-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalVideoTitle">Safety Video Player</h3>
+                <span class="close-modal-btn" onclick="closeVideoPopup()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="iframe-container">
+                    <iframe id="popupIframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        © 2026 UTKAL COAL MINE
-        | Safety Department Portal
+    <div class="clean-footer">
+        <p>© 2026 UTKAL COAL MINE | Safety Department</p>
+    </div>
 
-    </p>
-
-</div>
-
-<!-- ================= JS ================= -->
-
-<script>
-
-    function searchVideos(){
-
-        let input =
-        document
-        .getElementById("videoSearch")
-        .value
-        .toLowerCase();
-
-        let cards =
-        document.getElementsByClassName("coal-video-card");
-
-        for(let i=0; i<cards.length; i++){
-
-            let text =
-            cards[i].innerText.toLowerCase();
-
-            if(text.includes(input)){
-
-                cards[i].style.display = "";
-
-            }else{
-
-                cards[i].style.display = "none";
-            }
+    <script>
+    // Accordion Toggle Logic
+    function toggleCategory(id, element){
+        let panel = document.getElementById(id);
+        let arrow = element.querySelector('.arrow-icon');
+        
+        if(panel.style.display === "none" || panel.style.display === ""){
+            panel.style.display = "block";
+            arrow.style.transform = "rotate(0deg)";
+        } else {
+            panel.style.display = "none";
+            arrow.style.transform = "rotate(-90deg)";
         }
     }
 
-</script>
+    // Dynamic Video Search filter
+    function searchVideos(){
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let items = document.querySelectorAll(".subvideo-item");
 
+        items.forEach(item => {
+            let text = item.querySelector('.video-title-text').innerText.toLowerCase();
+            if(text.includes(input)){
+                item.style.display = "";
+                item.closest('.category-body').style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+
+    // Modal Opening & Autoplay Injection Logic
+    function openVideoPopup(title, youtubeId) {
+        document.getElementById('modalVideoTitle').innerText = title;
+        // YouTube Embed URL structure prepare kiya
+        let embedUrl = "https://www.youtube.com/embed/" + youtubeId + "?autoplay=1&rel=0";
+        document.getElementById('popupIframe').src = embedUrl;
+        document.getElementById('videoModal').style.display = "flex";
+    }
+
+    // Modal Closure & Stream Cut Logic
+    function closeVideoPopup() {
+        document.getElementById('videoModal').style.display = "none";
+        document.getElementById('popupIframe').src = ""; // Source clear taaki background me sound na chale
+    }
+
+    // Agar user modal ke bahar dark area par click kare toh popup close ho jaye
+    window.onclick = function(event) {
+        let modal = document.getElementById('videoModal');
+        if (event.target == modal) {
+            closeVideoPopup();
+        }
+    }
+    </script>
 </body>
 </html>
-
-

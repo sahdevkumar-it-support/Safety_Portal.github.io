@@ -1,0 +1,304 @@
+/* ==========================================================================
+   ANIMATED DASHBOARD CONTROL PANEL STYLESHEET
+   ========================================================================== */
+
+/* Reset & Fonts Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #0f172a; /* Dark sleek premium background */
+    color: #f8fafc;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dashboard-wrapper {
+    width: 100%;
+}
+
+/* 1. Header Styles */
+.main-header {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-icon {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.header-brand h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.user-welcome {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.user-welcome strong {
+    color: #f8fafc;
+}
+
+.btn-logout {
+    text-decoration: none;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+}
+
+/* Container Layout */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+/* 2. Dhasu Stats Cards Section */
+.stats-section {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    flex: 1;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+/* Card Entry Animation Delay */
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+.stat-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.stat-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    z-index: 2;
+}
+
+/* Individual Gradient Setup for Cards */
+.category-card .stat-icon { background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(29, 78, 216, 0.3)); color: #3b82f6; }
+.video-card .stat-icon { background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(109, 40, 217, 0.3)); color: #a855f7; }
+.user-card .stat-icon { background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(4, 120, 87, 0.3)); color: #10b981; }
+
+.stat-info {
+    z-index: 2;
+}
+
+.stat-info h3 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.stat-info p {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Background Card Glow Hover Effect */
+.card-glow {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+    top: -30px;
+    right: -30px;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+}
+
+.stat-card:hover .card-glow {
+    transform: scale(2.5);
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+}
+
+/* 3. Action Menu Section */
+.menu-section {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 24px;
+    padding: 35px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title i {
+    color: #fbbf24;
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* Modern Grid Items */
+.menu-item {
+    text-decoration: none;
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 24px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.menu-item span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+    transition: color 0.3s ease;
+}
+
+/* Custom Accents for Menu Items */
+.color-1 .menu-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.color-2 .menu-icon { background: rgba(99, 102, 241, 0.1); color: #6366f1; }
+.color-3 .menu-icon { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+.color-4 .menu-icon { background: rgba(236, 72, 153, 0.1); color: #ec4899; }
+.color-5 .menu-icon { background: rgba(234, 179, 8, 0.1); color: #eab308; }
+.color-6 .menu-icon { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
+
+/* Menu Item Hover Animation Matrix */
+.menu-item:hover {
+    transform: translateY(-4px);
+    background: #24324d;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu-item:hover span {
+    color: #ffffff;
+}
+
+/* Scaling icon on hover */
+.menu-item:hover .menu-icon {
+    transform: scale(1.1) rotate(3deg);
+}
+
+/* Animation Frames */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Utilities */
+@media (max-width: 992px) {
+    .stats-section {
+        flex-direction: column;
+    }
+    .main-header {
+        padding: 16px 20px;
+    }
+    .main-content {
+        padding: 20px;
+    }
+}

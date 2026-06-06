@@ -55,7 +55,7 @@ def add_user():
     role = request.form.get("role")
 
     # Validation: Check agar user pehle se exist toh nahi karta
-    existing_user = users_collection.find_one({"$or": [{"username": username}, {"email": email}]})
+    existing_user = users.find_one({"$or": [{"username": username}, {"email": email}]})
     
     if existing_user:
         flash("⚠️ Username ya Email pehle se register hai!", "error")

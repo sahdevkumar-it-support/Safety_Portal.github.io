@@ -13,20 +13,22 @@ from flask import send_file
 # 1. APPLICATION & DATABASE INITIALIZATION
 # ==========================================
 
-# Flask App initialize kiye aur session security ke liye secret key lagaye
 app = Flask(__name__)
 app.secret_key = "safety_portal_secret"
 
-# MongoDB client connection aur database select kiya
-client = MongoClient("mongodb://localhost:27017/")
-db = client["safety_video_db"]
-users_collection = db["users"]
+# CHANGE HERE: Yahan hum environment variable ka use karenge
+mongo_uri = os.environ.get("MONGO_URI")
 
-# Database ke collections (Tables) define kiye
+# Agar Vercel par hoga toh Atlas se connect hoga, varna Localhost se
+client = MongoClient(mongo_uri if mongo_uri else "mongodb://localhost:27017/")
+
+# Database ka naam Atlas mein wahi hona chahiye jo yahan likha hai
+db = client["safety_video_db"]
+
+# Collections
 users = db["users"]
 categories = db["categories"]
 videos = db["videos"]
-
 
 @app.route("/users")
 def manage_users():

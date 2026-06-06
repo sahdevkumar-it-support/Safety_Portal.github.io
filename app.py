@@ -102,7 +102,7 @@ def login():
         password = request.form["password"]
 
         # Database me username check karna
-        user = users_collection.find_one({"username": username})
+        user = users.find_one({"username": username})
 
         if user:
             db_password = user["password"]
